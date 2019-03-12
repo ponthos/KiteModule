@@ -1,25 +1,43 @@
-apply plugin: 'com.android.application'
+if(rootProject.ext.isApplication){
+    apply plugin: 'com.android.application'
+}else{
+    apply plugin: 'com.android.library'
+}
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
     defaultConfig {
-        applicationId "com.jiayuan.jr.kiteshell"
+        if(rootProject.ext.isApplication){
+            applicationId 'com.jiayuan.jr.bannermodule'
+        }else{
+            //
+        }
         minSdkVersion rootProject.ext.android.minSdkVersion
         targetSdkVersion rootProject.ext.android.targetSdkVersion
         versionCode rootProject.ext.android.versionCode
         versionName rootProject.ext.android.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-    }
-    compileOptions {
-        incremental = false
-        targetCompatibility JavaVersion.VERSION_1_8
-        sourceCompatibility JavaVersion.VERSION_1_8
+        resourcePrefix'bannermodule_'
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
         }
     }
+//    sourceSets{
+//        main{
+//            if(rootProject.ext.isApplication){
+//                manifest.srcFile'src/main/debug/Androidmanifest.xml'
+//            }else{
+//                manifest.srcFile'src/main/release/Androidmanifest.xml'
+//                java{
+//                    exclude{'debug/**'
+//                    }
+//                }
+//            }
+//        }
+//    }
 }
 
 dependencies {
@@ -30,25 +48,7 @@ dependencies {
     testImplementation rootProject.ext.dependencies.junit
     androidTestImplementation rootProject.ext.dependencies.runner
     androidTestImplementation rootProject.ext.dependencies.espresso
-    /
-**MVParms配置
-/
     implementation 'com.blankj:utilcode:1.23.6'
-    implementation 'me.jessyan:arms:2.5.0'
-//    ---------------------- 以下是扩展库 ----------------------
-//想使用 Glide 请依赖 arms-imageloader-glide 扩展库, 使用方式请看 #4.1
-    implementation 'me.jessyan:arms-imageloader-glide:2.5.0'
-//想使用 AndroidAutoLayout 请依赖 arms-autolayout 扩展库, 使用方式请查看 #4.2
-    implementation 'me.jessyan:arms-autolayout:2.5.0'
-    implementation rootProject.ext.dependencies["autosize"]
-    annotationProcessor rootProject.ext.dependencies["butterknife-compiler"] //Butterknife 插件, 很多人因为没加这个而报错, 切记!!!
-    annotationProcessor rootProject.ext.dependencies["dagger2-compiler"]//依赖插件
-    /***
-     * MVPArms配置
-     */
-    implementation project(":modelmodule")
-    implementation project(":basemodule")
-    implementation project(":bannermodule")
     if(rootProject.ext.isApplication){
 
     }else{

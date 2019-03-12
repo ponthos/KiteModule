@@ -6,17 +6,18 @@ import android.support.v4.app.FragmentManager;
 
 import com.jess.arms.base.delegate.AppLifecycles;
 import com.jess.arms.di.module.GlobalConfigModule;
+import com.jess.arms.http.imageloader.glide.GlideImageLoaderStrategy;
 import com.jess.arms.integration.ConfigModule;
 
-import java.io.File;
 import java.util.List;
 
 public class GlobalConfiguration implements ConfigModule {
     @Override
     public void applyOptions(Context context, GlobalConfigModule.Builder builder) {
 //        //使用 builder 可以为框架配置一些配置信息
-        builder.baseurl(Api.APP_DOMAIN)
-                .cacheFile(new File("cache"));
+//        builder.baseurl(Api.APP_DOMAIN)
+//                .cacheFile(new File("cache"));
+        builder.imageLoaderStrategy(new GlideImageLoaderStrategy());
     }
 
     @Override

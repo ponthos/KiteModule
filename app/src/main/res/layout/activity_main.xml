@@ -1,16 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="connectmodule.Ui.UserActivity">
-
-    <com.youth.banner.Banner
-        android:id="@+id/banner"
+    android:id="@+id/constraint"
+    tools:context="connectmodule.Ui.Activity.UserActivity">
+    <com.jiayuan.jr.bannermodule.Banner
         android:layout_width="match_parent"
-        android:layout_height="150dp"/>
-    <include layout="@layout/content_main" />
+        android:layout_height="200dp"
+        android:id="@+id/banner"
+        tools:ignore="MissingConstraints"
+        />
 
-
-</android.support.design.widget.CoordinatorLayout>
+    <FrameLayout
+        android:id="@+id/fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toTopOf="@+id/tabMode"
+        app:layout_constraintTop_toBottomOf="@+id/banner"/>
+<LinearLayout
+    app:layout_constraintBottom_toBottomOf="@+id/constraint"
+    android:id="@+id/tabMode"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+     >
+<TextView
+    android:id="@+id/home"
+    android:layout_weight="1"
+    android:drawableTop="@mipmap/ic_launcher"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:text="首页"/>
+    <TextView
+        android:id="@+id/other"
+        android:layout_weight="1"
+        android:gravity="center_horizontal"
+        android:drawableTop="@mipmap/ic_launcher"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="内容"/>
+    <TextView
+        android:id="@+id/mine"
+        android:layout_weight="1"
+        android:gravity="center_horizontal"
+        android:drawableTop="@mipmap/ic_launcher"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="我的"/>
+</LinearLayout>
+</android.support.constraint.ConstraintLayout>
