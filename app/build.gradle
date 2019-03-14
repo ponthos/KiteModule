@@ -8,6 +8,11 @@ android {
         versionCode rootProject.ext.android.versionCode
         versionName rootProject.ext.android.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [AROUTER_MODULE_NAME: project.getName()]
+            }
+        }
     }
     compileOptions {
         incremental = false
@@ -33,22 +38,17 @@ dependencies {
     /
 **MVParms配置
 /
-    implementation 'com.blankj:utilcode:1.23.6'
-    implementation 'me.jessyan:arms:2.5.0'
-//    ---------------------- 以下是扩展库 ----------------------
-//想使用 Glide 请依赖 arms-imageloader-glide 扩展库, 使用方式请看 #4.1
-    implementation 'me.jessyan:arms-imageloader-glide:2.5.0'
-//想使用 AndroidAutoLayout 请依赖 arms-autolayout 扩展库, 使用方式请查看 #4.2
-    implementation 'me.jessyan:arms-autolayout:2.5.0'
-    implementation rootProject.ext.dependencies["autosize"]
-    annotationProcessor rootProject.ext.dependencies["butterknife-compiler"] //Butterknife 插件, 很多人因为没加这个而报错, 切记!!!
+    api 'com.blankj:utilcode:1.23.6'
     annotationProcessor rootProject.ext.dependencies["dagger2-compiler"]//依赖插件
+    annotationProcessor "com.jakewharton:butterknife-compiler:8.8.1" //Butterknife 插件, 很多人因为没加这个而报错, 切记!!!
+    annotationProcessor 'com.alibaba:arouter-compiler:1.2.2'
     /***
      * MVPArms配置
      */
-    implementation project(":modelmodule")
-    implementation project(":basemodule")
-    implementation project(":bannermodule")
+    api project(":modelmodule")
+    api project(":basemodule")
+    api project(":bannermodule")
+    api project(":bottle")
     if(rootProject.ext.isApplication){
 
     }else{

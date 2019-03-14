@@ -1,24 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/constraint"
     tools:context="connectmodule.Ui.Activity.UserActivity">
-    <com.jiayuan.jr.bannermodule.Banner
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:id="@+id/banner"
-        tools:ignore="MissingConstraints"
-        />
 
     <FrameLayout
         android:id="@+id/fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toTopOf="@+id/tabMode"
-        app:layout_constraintTop_toBottomOf="@+id/banner"/>
+        />
 <LinearLayout
     app:layout_constraintBottom_toBottomOf="@+id/constraint"
     android:id="@+id/tabMode"

@@ -2,18 +2,13 @@ package com.jiayuan.jr.bottle.app;
 
 import android.app.Application;
 import android.content.Context;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
 import com.jess.arms.base.delegate.AppLifecycles;
 import com.jess.arms.di.module.GlobalConfigModule;
 import com.jess.arms.integration.ConfigModule;
-import com.jess.arms.utils.ArmsUtils;
-import com.squareup.leakcanary.RefWatcher;
 
 import java.util.List;
-
-import com.jiayuan.jr.bottle.BuildConfig;
 
 /**
  * ================================================
@@ -53,18 +48,18 @@ public final class GlobalConfiguration implements ConfigModule {
 
     @Override
     public void injectFragmentLifecycle(Context context, List<FragmentManager.FragmentLifecycleCallbacks> lifecycles) {
-        //当所有模块集成到宿主 App 时, 在 App 中已经执行了以下代码, 所以不需要再执行
-        if (BuildConfig.IS_BUILD_MODULE) {
-            lifecycles.add(new FragmentManager.FragmentLifecycleCallbacks() {
-                @Override
-                public void onFragmentDestroyed(FragmentManager fm, Fragment f) {
-                    ((RefWatcher) ArmsUtils
-                            .obtainAppComponentFromContext(f.getActivity())
-                            .extras()
-                            .get(IntelligentCache.getKeyOfKeep(RefWatcher.class.getName())))
-                            .watch(f);
-                }
-            });
-        }
+//        //当所有模块集成到宿主 App 时, 在 App 中已经执行了以下代码, 所以不需要再执行
+//        if (BuildConfig.IS_BUILD_MODULE) {
+//            lifecycles.add(new FragmentManager.FragmentLifecycleCallbacks() {
+//                @Override
+//                public void onFragmentDestroyed(FragmentManager fm, Fragment f) {
+//                    ((RefWatcher) ArmsUtils
+//                            .obtainAppComponentFromContext(f.getActivity())
+//                            .extras()
+//                            .get(IntelligentCache.getKeyOfKeep(RefWatcher.class.getName())))
+//                            .watch(f);
+//                }
+//            });
+//        }
     }
 }
