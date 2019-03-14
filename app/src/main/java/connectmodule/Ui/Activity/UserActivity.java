@@ -61,12 +61,12 @@ public class UserActivity extends BaseActivity<BasePresenter> implements UserCon
         otherFragment=new OtherFragment();
         mineFragment=new MineFragment();
         fragment=new Fragment[]{homeFragment,otherFragment,mineFragment};
-        fragmentManager=getSupportFragmentManager();
-        fragmentTransaction=fragmentManager.beginTransaction();
+
         mine.setOnClickListener(
                 v -> {
                     // 1. 应用内简单的跳转(通过URL跳转在'进阶用法'中)
-                    ARouter.getInstance().build("/test/activity").navigation();
+//                    ARouter.getInstance().build("/test/activity").navigation();
+                    ARouter.getInstance().build("/bottle/bessel").navigation();
 //                    // 2. 跳转并携带参数
 //                    ARouter.getInstance().build("/test/1")
 //                            .withLong("key1", 666L)
@@ -86,6 +86,8 @@ public class UserActivity extends BaseActivity<BasePresenter> implements UserCon
 
     }
     private void selectTab(int i){
+        fragmentManager=getSupportFragmentManager();
+        fragmentTransaction=fragmentManager.beginTransaction();
         hideAllFragment(fragmentTransaction);
         if(fragment[i].isAdded()){
             fragmentTransaction.show(fragment[i]);
@@ -99,7 +101,7 @@ public class UserActivity extends BaseActivity<BasePresenter> implements UserCon
         for(int i=0;i<fragment.length;i++){
             fragmentTransaction.hide(fragment[i]);
         }
-        fragmentTransaction.commit();
+//        fragmentTransaction.commit();
     }
 
 
