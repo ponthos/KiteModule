@@ -3,9 +3,10 @@
     package="com.jiayuan.jr.bottle">
 
     <application>
-        <activity android:name=".BesselActivity"></activity>
+        <activity android:name=".app.ui.Activity.BubbleActivity"></activity>
+        <activity android:name=".app.ui.Activity.BesselActivity" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".app.ui.Activity.LoginActivity"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>

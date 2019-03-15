@@ -4,6 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".BesselActivity">
-
+    tools:context=".app.ui.Activity.BesselActivity">
+    <RelativeLayout
+        android:padding="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <!--<com.jiayuan.jr.bottle.app.utils.BasicPathView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:id="@+id/basic"-->
+            <!--android:background="#ffffff" />-->
+        <com.jiayuan.jr.bottle.app.utils.AdvancePathView
+            android:layout_width="match_parent"
+            android:id="@+id/advance"
+            android:layout_height="match_parent">
+        </com.jiayuan.jr.bottle.app.utils.AdvancePathView>
+    </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

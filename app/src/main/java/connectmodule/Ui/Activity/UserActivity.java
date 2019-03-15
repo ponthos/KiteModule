@@ -61,7 +61,7 @@ public class UserActivity extends BaseActivity<BasePresenter> implements UserCon
         otherFragment=new OtherFragment();
         mineFragment=new MineFragment();
         fragment=new Fragment[]{homeFragment,otherFragment,mineFragment};
-
+        selectTab(0);
         mine.setOnClickListener(
                 v -> {
                     // 1. 应用内简单的跳转(通过URL跳转在'进阶用法'中)
@@ -79,9 +79,8 @@ public class UserActivity extends BaseActivity<BasePresenter> implements UserCon
             selectTab(0);
         });
         other.setOnClickListener(v -> {
-            selectTab(1);
+            ARouter.getInstance().build("/bottle/bubble").navigation();
         });
-
 //        banner=findViewById(R.id.banner);
 
     }
