@@ -4,16 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     tools:context=".app.ui.Activity.BubbleActivity">
     <RelativeLayout
         android:padding="5dp"
+
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <com.jiayuan.jr.bottle.app.utils.HearView
         android:layout_width="match_parent"
         android:id="@+id/high"
-        android:background="#50ffffff"
         android:layout_height="match_parent">
 
         </com.jiayuan.jr.bottle.app.utils.HearView>

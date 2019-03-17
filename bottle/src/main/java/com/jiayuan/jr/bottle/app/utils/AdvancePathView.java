@@ -54,7 +54,6 @@ public class AdvancePathView extends RelativeLayout {
 
     private void initView() {
 
-        setBackgroundColor(Color.WHITE);
 
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
@@ -68,21 +67,21 @@ public class AdvancePathView extends RelativeLayout {
         pointFEnd = new PointF();
 
         random = new Random();
-        bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
+        bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.timg);
     }
 
 
     protected void initPoint() {
-        pointFStart.x = getMeasuredWidth() / 4;
+        pointFStart.x = getMeasuredWidth()/1;
         pointFStart.y = getMeasuredHeight() - 10;
 
         pointFEnd.y = 10;
-        pointFEnd.x = getMeasuredWidth() / 1;
+        pointFEnd.x = 1;
 
-        pointFFirst.x = 10;
-        pointFSecond.x = getMeasuredWidth() - 10;
-        pointFSecond.y = getMeasuredHeight() / 4;
-        pointFFirst.y = getMeasuredHeight() * 3 / 4;
+        pointFSecond.x= 10;
+        pointFSecond.y= getMeasuredHeight() * 3 / 4;
+        pointFFirst.x = getMeasuredWidth() - 10;
+        pointFFirst.y = getMeasuredHeight() / 4;
     }
 
 
@@ -92,14 +91,14 @@ public class AdvancePathView extends RelativeLayout {
         super.onDraw(canvas);
         initPoint();
         mPaint.setStyle(Paint.Style.FILL);
-        mPaint.setColor(Color.WHITE);
-        canvas.drawCircle(pointFFirst.x, pointFFirst.y, 10, mPaint);
-        canvas.drawCircle(pointFSecond.x, pointFSecond.y, 10, mPaint);
-        canvas.drawCircle(pointFEnd.x, pointFEnd.y, 10, mPaint);
-        canvas.drawCircle(pointFStart.x, pointFStart.y, 10, mPaint);
+        mPaint.setColor(Color.TRANSPARENT);
+        canvas.drawCircle(pointFFirst.x, pointFFirst.y, 1, mPaint);
+        canvas.drawCircle(pointFSecond.x, pointFSecond.y, 1, mPaint);
+        canvas.drawCircle(pointFEnd.x, pointFEnd.y, 1, mPaint);
+        canvas.drawCircle(pointFStart.x, pointFStart.y, 1, mPaint);
 
         mPaint.setStyle(Paint.Style.STROKE);
-        mPaint.setColor(Color.WHITE);
+        mPaint.setColor(Color.TRANSPARENT);
         mPath.moveTo(pointFStart.x, pointFStart.y);
         mPath.cubicTo(pointFFirst.x, pointFFirst.y, pointFSecond.x, pointFSecond.y, pointFEnd.x, pointFEnd.y);
         canvas.drawPath(mPath, mPaint);
@@ -121,7 +120,7 @@ public class AdvancePathView extends RelativeLayout {
 
 
         Button button = new Button(getContext());
-        button.setText("添加一个心");
+        button.setText("风筝起飞");
 
         button.setOnClickListener(new OnClickListener() {
             @Override
@@ -138,11 +137,22 @@ public class AdvancePathView extends RelativeLayout {
         LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.addRule(CENTER_HORIZONTAL);
         params.addRule(ALIGN_PARENT_BOTTOM);
-        imageView.setImageBitmap(drawHeart(colors[random.nextInt(colors.length)]));
+//        imageView.setImageBitmap(drawHeart(colors[random.nextInt(colors.length)]));
+        imageView.setImageBitmap(bitmap);
         addView(imageView, params);
         moveHeart(imageView);
     }
-
+    //去掉覆盖颜色2019/03/17
+//    public void addHeart() {
+//        ImageView imageView = new ImageView(getContext());
+//        LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+//        params.addRule(CENTER_HORIZONTAL);
+//        params.addRule(ALIGN_PARENT_BOTTOM);
+//        imageView.setImageBitmap(drawHeart(colors[random.nextInt(colors.length)]));
+//        imageView.setImageBitmap(bitmap);
+//        addView(imageView, params);
+//        moveHeart(imageView);
+//    }
 
 
     private void moveHeart(final ImageView view){
