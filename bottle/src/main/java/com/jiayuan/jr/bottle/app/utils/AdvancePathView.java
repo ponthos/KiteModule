@@ -19,6 +19,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
+import android.view.animation.ScaleAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -155,7 +156,7 @@ public class AdvancePathView extends RelativeLayout {
 //    }
 
 
-    private void moveHeart(final ImageView view){
+    public void moveHeart(final ImageView view){
         PointF pointFFirst = this.pointFFirst;
         PointF pointFSecond = this.pointFSecond;
         PointF pointFStart = this.pointFStart;
@@ -196,9 +197,122 @@ public class AdvancePathView extends RelativeLayout {
         set.start();
 
     }
+    //缩放的变化动画
+    public static  void scaleAnimate(final View view ,float start ,final float end ,final int duration)
+    {
+        final ValueAnimator valueAnimator = ValueAnimator.ofFloat(start , end);
+        valueAnimator.setDuration(duration);
+        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                //这里在值变化的时候做相应的动作，我们是缩放图片，注意先设置缩放的起始点，坐标都是以view的左上角为原点
+                float value = (float) animation.getAnimatedValue();
+                view.setPivotX(view.getWidth()/2);
+                view.setPivotY(view.getHeight()/2);
+                view.setScaleX(value);
+                view.setScaleY(value);
+            }
+        });
+        //动画完成后有个缩小的动作
+        valueAnimator.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                //这里写是有问题的，递归调用会重新启动监听，然后又会启动，因为动画只启动一次的缘故，但是会持续执行onUpdateListener，且value值一直是0.95
+//             scaleAnimate(view, end, 0.95f, duration / 3);
+                ScaleAnimation scaleAnimation = new ScaleAnimation(1 , 0.95f , 1 , 0.95f , view.getWidth()/2 , view.getHeight()/2);
+                scaleAnimation.setDuration(duration);
+                scaleAnimation.setFillAfter(true);//这是保证动画后的效果，不然会恢复到原来大小。
+                view.startAnimation(scaleAnimation);
+            }
+        });
+        valueAnimator.start();
+    }
+    public void moveEnvelope(final ImageView view){
+        PointF pointFFirst = this.pointFFirst;
+        PointF pointFStart =  this.pointFEnd;
+        PointF pointFEnd =this.pointFStart;
 
 
+        ValueAnimator animator = ValueAnimator.ofObject(new BezierEvaluator(pointFFirst), pointFStart, pointFEnd);
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                PointF value = (PointF) animation.getAnimatedValue();
+                view.setX(value.x);
+                view.setY(value.y);
+            }
+        });
 
+        animator.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                AdvancePathView.this.removeView(view);
+            }
+        });
+
+        ObjectAnimator af = ObjectAnimator.ofFloat(view, "alpha", 1f, 0);
+        af.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                AdvancePathView.this.removeView(view);
+            }
+        });
+        ValueAnimator valueAnimator = ValueAnimator.ofFloat(0.5f , 0.5f);
+        valueAnimator.setDuration(5000);
+        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                //这里在值变化的时候做相应的动作，我们是缩放图片，注意先设置缩放的起始点，坐标都是以view的左上角为原点
+                float value = (float) animation.getAnimatedValue();
+                view.setPivotX(view.getWidth()/2);
+                view.setPivotY(view.getHeight()/2);
+                view.setScaleX(value);
+                view.setScaleY(value);
+            }
+        });  //动画完成后有个缩小的动作
+        valueAnimator.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                //这里写是有问题的，递归调用会重新启动监听，然后又会启动，因为动画只启动一次的缘故，但是会持续执行onUpdateListener，且value值一直是0.95
+//             scaleAnimate(view, end, 0.95f, duration / 3);
+                ScaleAnimation scaleAnimation = new ScaleAnimation(1 , 0.95f , 1 , 0.95f , view.getWidth()/2 , view.getHeight()/2);
+                scaleAnimation.setDuration(5000);
+                scaleAnimation.setFillAfter(true);//这是保证动画后的效果，不然会恢复到原来大小。
+                view.startAnimation(scaleAnimation);
+            }
+        });
+        AnimatorSet set = new AnimatorSet();
+        set.setInterpolator(new AccelerateInterpolator());
+        set.setDuration(5000);
+        set.play(animator).with(af).with(valueAnimator);
+        set.start();
+
+    }
+
+    /**
+     *估值器
+     */
+    public class BezierEvaluator implements TypeEvaluator<PointF> {
+
+        private PointF controllPoint;
+
+        public BezierEvaluator(PointF controllPoint) {
+            this.controllPoint = controllPoint;
+        }
+
+        @Override
+        public PointF evaluate(float t, PointF startValue, PointF endValue) {
+//      贝塞尔曲线二阶公式
+            PointF result = new PointF();
+            result.x = (int) ((1 - t) * (1 - t) * startValue.x + 2 * t * (1 - t) * controllPoint.x + t * t * endValue.x);
+            result.y = (int) ((1 - t) * (1 - t) * startValue.y + 2 * t * (1 - t) * controllPoint.y + t * t * endValue.y);
+            return result;
+        }
+
+
+    }
     /**
      * 绘制一个增值器
      */

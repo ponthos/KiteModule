@@ -7,7 +7,7 @@ android {
         targetSdkVersion rootProject.ext.android.targetSdkVersion
         versionCode rootProject.ext.android.versionCode
         versionName rootProject.ext.android.versionName
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments = [AROUTER_MODULE_NAME: project.getName()]
@@ -40,7 +40,7 @@ dependencies {
 /
     api 'com.blankj:utilcode:1.23.6'
     annotationProcessor rootProject.ext.dependencies["dagger2-compiler"]//依赖插件
-    annotationProcessor "com.jakewharton:butterknife-compiler:8.8.1" //Butterknife 插件, 很多人因为没加这个而报错, 切记!!!
+    annotationProcessor "com.jakewharton:butterknife-compiler:10.0.0" //Butterknife 插件, 很多人因为没加这个而报错, 切记!!!
     annotationProcessor 'com.alibaba:arouter-compiler:1.2.2'
     /***
      * MVPArms配置
@@ -49,6 +49,7 @@ dependencies {
     api project(":basemodule")
     api project(":bannermodule")
     api project(":bottle")
+    api project(':folding-cell')
     if(rootProject.ext.isApplication){
 
     }else{

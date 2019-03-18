@@ -20,7 +20,7 @@ android {
         targetSdkVersion rootProject.ext.android.targetSdkVersion
         versionCode rootProject.ext.android.versionCode
         versionName rootProject.ext.android.versionName
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         resourcePrefix'basemodule_'
     }
     buildTypes {
@@ -66,8 +66,8 @@ dependencies {
 //想使用 AndroidAutoLayout 请依赖 arms-autolayout 扩展库, 使用方式请查看 #4.2
 //    api 'me.jessyan:arms-autolayout:2.5.0'
     api rootProject.ext.dependencies["autosize"]
-    api "com.jakewharton:butterknife:8.8.1"
-    annotationProcessor "com.jakewharton:butterknife-compiler:8.8.1" //Butterknife 插件, 很多人因为没加这个而报错, 切记!!!
+    api "com.jakewharton:butterknife:10.0.0"
+    annotationProcessor "com.jakewharton:butterknife-compiler:10.0.0" //Butterknife 插件, 很多人因为没加这个而报错, 切记!!!
     annotationProcessor rootProject.ext.dependencies["dagger2-compiler"]//依赖插件
     if(rootProject.ext.isApplication){
 

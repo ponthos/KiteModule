@@ -1,1 +1,1 @@
-include ':app', ':basemodule', ':modelmodule', ':bannermodule', ':bottle'
+include ':app', ':basemodule', ':modelmodule', ':bannermodule', ':bottle', ':folding-cell'

@@ -11,15 +11,6 @@
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <!--//MVP-->
-    <!--//Banner-->
-    <!-- if you want to load images from a file OR from the internet -->
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <!--//Banner-->
-    <!--<application-->
-        <!--android:name="com.jess.arms.base.BaseApplication">-->
-
-    <!--android:name=".KiteShellApplication"-->
-    <!--</application>-->
     <application
         android:name=".KiteShellApplication"
         android:allowBackup="true"

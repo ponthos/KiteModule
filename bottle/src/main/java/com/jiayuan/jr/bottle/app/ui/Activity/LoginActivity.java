@@ -1,7 +1,7 @@
 package com.jiayuan.jr.bottle.app.ui.Activity;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.jiayuan.jr.bottle.R;

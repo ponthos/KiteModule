@@ -2,11 +2,6 @@ package connectmodule.Ui.Activity;
 //
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.widget.TextView;
 
 import com.alibaba.android.arouter.launcher.ARouter;
@@ -16,6 +11,11 @@ import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.mvp.BasePresenter;
 import com.jiayuan.jr.kiteshell.R;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import butterknife.BindView;
 import connectmodule.Component.DaggerUserComponent;
 import connectmodule.Contract.UserContract;

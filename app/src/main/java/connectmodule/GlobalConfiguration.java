@@ -2,7 +2,6 @@ package connectmodule;
 
 import android.app.Application;
 import android.content.Context;
-import android.support.v4.app.FragmentManager;
 
 import com.jess.arms.base.delegate.AppLifecycles;
 import com.jess.arms.di.module.GlobalConfigModule;
@@ -10,6 +9,8 @@ import com.jess.arms.http.imageloader.glide.GlideImageLoaderStrategy;
 import com.jess.arms.integration.ConfigModule;
 
 import java.util.List;
+
+import androidx.fragment.app.FragmentManager;
 
 public class GlobalConfiguration implements ConfigModule {
     @Override
