@@ -1,4 +1,4 @@
-package com.jiayuan.jr.bottle.app.utils;
+package com.jiayuan.jr.basemodule;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -18,15 +18,10 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
-import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.jiayuan.jr.bottle.R;
 
 import java.util.Random;
 
@@ -134,7 +129,6 @@ public class HearView extends RelativeLayout {
         LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.addRule(CENTER_HORIZONTAL);
         params.addRule(ALIGN_PARENT_BOTTOM);
-//        imageView.setImageBitmap(drawHeart(colors[random.nextInt(colors.length)]));
         imageView.setBackground(getResources().getDrawable(R.drawable.pop));
         imageView.setText("我是文字");
         imageView.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL);

@@ -16,6 +16,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.jiayuan.jr.basemodule.AdvancePathView;
+import com.q42.android.scrollingimageview.ScrollingImageView;
 import com.ramotion.foldingcell.animations.AnimationEndListener;
 import com.ramotion.foldingcell.animations.FoldAnimation;
 import com.ramotion.foldingcell.animations.HeightAnimation;
@@ -48,6 +50,7 @@ public class FoldingCell extends RelativeLayout {
     private int mAdditionalFlipsCount = DEF_ADDITIONAL_FLIPS;
     private int mCameraHeight = DEF_CAMERA_HEIGHT;
     private Drawable mbackSideDrawable;
+    private ArrayList<Drawable> mbackSideDrawables;
 
     public FoldingCell(Context context) {
         this(context, null);
@@ -59,7 +62,6 @@ public class FoldingCell extends RelativeLayout {
 
     public FoldingCell(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-
         TypedArray styledAttrs = context.obtainStyledAttributes(attrs, R.styleable.FoldingCell);
         if (styledAttrs!=null){
             final int count = styledAttrs.getIndexCount();
@@ -112,7 +114,32 @@ public class FoldingCell extends RelativeLayout {
      * Initializes folding cell programmatically with custom settings
      *
      * @param animationDuration    animation duration, default is 1000
-     * @param backSideDrawable        color of back side, default is android.graphics.Color.GREY (0xFF888888)
+     * @param mbackSideDrawables     image of drawable,ArrayList
+     * @param additionalFlipsCount count of additional flips (after first one), set 0 for auto
+     */
+    public void initialize(int animationDuration, ArrayList<Drawable> mbackSideDrawables, int additionalFlipsCount) {
+        this.mAnimationDuration = animationDuration;
+        this.mbackSideDrawables = mbackSideDrawables;
+        this.mAdditionalFlipsCount = additionalFlipsCount;
+    }
+    /**
+     * Initializes folding cell programmatically with custom settings
+     *
+     * @param animationDuration    animation duration, default is 1000
+     * @param mbackSideDrawables     image of drawable,ArrayList
+     * @param additionalFlipsCount count of additional flips (after first one), set 0 for auto
+     */
+    public void initialize(int cameraHeight, int animationDuration, ArrayList<Drawable> mbackSideDrawables, int additionalFlipsCount) {
+        this.mAnimationDuration = animationDuration;
+        this.mbackSideDrawables = mbackSideDrawables;
+        this.mAdditionalFlipsCount = additionalFlipsCount;
+        this.mCameraHeight = cameraHeight;
+    }
+    /**
+     * Initializes folding cell programmatically with custom settings
+     *
+     * @param animationDuration    animation duration, default is 1000
+     * @param backSideDrawable     image of drawable
      * @param additionalFlipsCount count of additional flips (after first one), set 0 for auto
      */
     public void initialize(int cameraHeight, int animationDuration, Drawable backSideDrawable, int additionalFlipsCount) {
@@ -185,6 +212,68 @@ public class FoldingCell extends RelativeLayout {
      *
      * @param skipAnimation if true - change state of cell instantly without animation
      */
+    public void fold(boolean skipAnimation,FoldingCell fc,ScrollingImageView scrollingBackground,AdvancePathView advance,ImageView imageView) {
+        if (!mUnfolded || mAnimationInProgress) return;
+
+        // get basic views
+        final View contentView = getChildAt(0);
+        if (contentView == null) return;
+        final View titleView = getChildAt(1);
+        if (titleView == null) return;
+
+        // hide title and content views
+        titleView.setVisibility(GONE);
+        contentView.setVisibility(GONE);
+
+        // make bitmaps from title and content views
+        Bitmap bitmapFromTitleView = measureViewAndGetBitmap(titleView, this.getMeasuredWidth());
+        Bitmap bitmapFromContentView = measureViewAndGetBitmap(contentView, this.getMeasuredWidth());
+
+        if (skipAnimation) {
+            contentView.setVisibility(GONE);
+            titleView.setVisibility(VISIBLE);
+            FoldingCell.this.mAnimationInProgress = false;
+            FoldingCell.this.mUnfolded = false;
+            this.getLayoutParams().height = titleView.getHeight();
+        } else {
+            ViewCompat.setHasTransientState(this, true);
+            // create empty layout for folding animation
+            final LinearLayout foldingLayout = createAndPrepareFoldingContainer();
+            // add that layout to structure
+            this.addView(foldingLayout);
+
+            // calculate heights of animation parts
+            ArrayList<Integer> heights = calculateHeightsForAnimationParts(titleView.getHeight(), contentView.getHeight(), mAdditionalFlipsCount);
+            // create list with animation parts for animation
+            ArrayList<FoldingCellView> foldingCellElements = prepareViewsForAnimation(heights, bitmapFromTitleView, bitmapFromContentView);
+            int childCount = foldingCellElements.size();
+            int part90degreeAnimationDuration = mAnimationDuration / (childCount * 2);
+            // start fold animation with end listener
+            startFoldAnimation(foldingCellElements, foldingLayout, part90degreeAnimationDuration,
+                    new AnimationEndListener() {
+                @Override
+                public void onAnimationEnd(Animation animation) {
+                    contentView.setVisibility(GONE);
+                    titleView.setVisibility(VISIBLE);
+                    foldingLayout.setVisibility(GONE);
+                    FoldingCell.this.removeView(foldingLayout);
+                    FoldingCell.this.mAnimationInProgress = false;
+                    FoldingCell.this.mUnfolded = false;
+                    ViewCompat.setHasTransientState(FoldingCell.this, true);
+                    function(fc,scrollingBackground,advance,imageView);
+                }
+            }
+            );
+            startCollapseHeightAnimation(heights, part90degreeAnimationDuration * 2);
+            this.mAnimationInProgress = true;
+        }
+    }
+
+    /**
+     * Fold cell with (or without) animation
+     *
+     * @param skipAnimation if true - change state of cell instantly without animation
+     */
     public void fold(boolean skipAnimation) {
         if (!mUnfolded || mAnimationInProgress) return;
 
@@ -222,23 +311,35 @@ public class FoldingCell extends RelativeLayout {
             int childCount = foldingCellElements.size();
             int part90degreeAnimationDuration = mAnimationDuration / (childCount * 2);
             // start fold animation with end listener
-            startFoldAnimation(foldingCellElements, foldingLayout, part90degreeAnimationDuration, new AnimationEndListener() {
-                @Override
-                public void onAnimationEnd(Animation animation) {
-                    contentView.setVisibility(GONE);
-                    titleView.setVisibility(VISIBLE);
-                    foldingLayout.setVisibility(GONE);
-                    FoldingCell.this.removeView(foldingLayout);
-                    FoldingCell.this.mAnimationInProgress = false;
-                    FoldingCell.this.mUnfolded = false;
-                    ViewCompat.setHasTransientState(FoldingCell.this, true);
-                }
-            });
+            startFoldAnimation(foldingCellElements, foldingLayout, part90degreeAnimationDuration,
+                    new AnimationEndListener() {
+                        @Override
+                        public void onAnimationEnd(Animation animation) {
+                            contentView.setVisibility(GONE);
+                            titleView.setVisibility(VISIBLE);
+                            foldingLayout.setVisibility(GONE);
+                            FoldingCell.this.removeView(foldingLayout);
+                            FoldingCell.this.mAnimationInProgress = false;
+                            FoldingCell.this.mUnfolded = false;
+                            ViewCompat.setHasTransientState(FoldingCell.this, true);
+                        }
+                    }
+            );
             startCollapseHeightAnimation(heights, part90degreeAnimationDuration * 2);
             this.mAnimationInProgress = true;
         }
     }
-
+    /**
+     * Toggle current state of FoldingCellLayout
+     */
+    public void toggle(boolean skipAnimation, FoldingCell fc, ScrollingImageView scrollingBackground, AdvancePathView advance,ImageView imageView) {
+        if (this.mUnfolded) {
+            this.fold(skipAnimation,fc,scrollingBackground,advance,imageView);
+        } else {
+            this.unfold(skipAnimation);
+            this.requestLayout();
+        }
+    }
 
     /**
      * Toggle current state of FoldingCellLayout
@@ -251,7 +352,6 @@ public class FoldingCell extends RelativeLayout {
             this.requestLayout();
         }
     }
-
     /**
      * Create and prepare list of FoldingCellViews with different bitmap parts for fold animation
      *
@@ -349,10 +449,22 @@ public class FoldingCell extends RelativeLayout {
      * @return ImageView with selected height and default background color
      * 修改折叠为图片折叠
      */
-
+    int i=0;
     protected ImageView createBackSideView(int height) {
         ImageView imageView = new ImageView(getContext());
-        imageView.setImageDrawable(mbackSideDrawable);
+
+        if(mbackSideDrawables.size()>0){
+            imageView.setImageDrawable(mbackSideDrawables.get(i));
+            if(i<mbackSideDrawables.size()-1){
+                i++;
+            }else{
+                //超过最大长度，重置为0从新开始
+                i=0;
+            }
+
+        }else{
+            imageView.setImageDrawable(mbackSideDrawable);
+        }
         imageView.setScaleType(ImageView.ScaleType.FIT_XY);
         imageView.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height));
         return imageView;

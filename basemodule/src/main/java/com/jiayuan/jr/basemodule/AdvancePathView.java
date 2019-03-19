@@ -1,4 +1,4 @@
-package com.jiayuan.jr.bottle.app.utils;
+package com.jiayuan.jr.basemodule;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -23,8 +23,6 @@ import android.view.animation.ScaleAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-
-import com.jiayuan.jr.bottle.R;
 
 import java.util.Random;
 
@@ -237,9 +235,15 @@ public class AdvancePathView extends RelativeLayout {
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
-                PointF value = (PointF) animation.getAnimatedValue();
-                view.setX(value.x);
-                view.setY(value.y);
+//                PointF value = (PointF) animation.getAnimatedValue();
+//                view.setX(value.x);
+//                view.setY(value.y);
+                //这里在值变化的时候做相应的动作，我们是缩放图片，注意先设置缩放的起始点，坐标都是以view的左上角为原点
+                PointF valuef = (PointF) animation.getAnimatedValue();
+                view.setPivotX(view.getWidth()/2);
+                view.setPivotY(view.getHeight()/2);
+                view.setScaleX(valuef.x);
+                view.setScaleY(valuef.y);
             }
         });
 
@@ -248,6 +252,11 @@ public class AdvancePathView extends RelativeLayout {
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
                 AdvancePathView.this.removeView(view);
+                AdvancePathView.this.removeView(view);
+                ScaleAnimation scaleAnimation = new ScaleAnimation(1 , 0.95f , 1 , 0.95f , view.getWidth()/2 , view.getHeight()/2);
+                scaleAnimation.setFillAfter(true);//这是保证动画后的效果，不然会恢复到原来大小。
+                view.startAnimation(scaleAnimation);
+                addHeart();
             }
         });
 
@@ -256,7 +265,7 @@ public class AdvancePathView extends RelativeLayout {
             @Override
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
-                AdvancePathView.this.removeView(view);
+
             }
         });
         ValueAnimator valueAnimator = ValueAnimator.ofFloat(0.5f , 0.5f);
@@ -277,16 +286,16 @@ public class AdvancePathView extends RelativeLayout {
             public void onAnimationEnd(Animator animation) {
                 //这里写是有问题的，递归调用会重新启动监听，然后又会启动，因为动画只启动一次的缘故，但是会持续执行onUpdateListener，且value值一直是0.95
 //             scaleAnimate(view, end, 0.95f, duration / 3);
-                ScaleAnimation scaleAnimation = new ScaleAnimation(1 , 0.95f , 1 , 0.95f , view.getWidth()/2 , view.getHeight()/2);
-                scaleAnimation.setDuration(5000);
-                scaleAnimation.setFillAfter(true);//这是保证动画后的效果，不然会恢复到原来大小。
-                view.startAnimation(scaleAnimation);
+//                ScaleAnimation scaleAnimation = new ScaleAnimation(1 , 0.95f , 1 , 0.95f , view.getWidth()/2 , view.getHeight()/2);
+//                scaleAnimation.setDuration(5000);
+//                scaleAnimation.setFillAfter(true);//这是保证动画后的效果，不然会恢复到原来大小。
+//                view.startAnimation(scaleAnimation);
             }
         });
         AnimatorSet set = new AnimatorSet();
         set.setInterpolator(new AccelerateInterpolator());
         set.setDuration(5000);
-        set.play(animator).with(af).with(valueAnimator);
+        set.play(animator).with(af);
         set.start();
 
     }

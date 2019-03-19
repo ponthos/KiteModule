@@ -23,12 +23,12 @@
             android:layout_height="wrap_content"
             scrolling_image_view:speed="1dp"
             scrolling_image_view:src="@drawable/bg" />
-        <com.jiayuan.jr.bottle.app.utils.AdvancePathView
+        <com.jiayuan.jr.basemodule.AdvancePathView
             android:background="#00ffffff"
             android:layout_width="match_parent"
             android:id="@+id/advance"
             android:layout_height="match_parent">
-        </com.jiayuan.jr.bottle.app.utils.AdvancePathView>
+        </com.jiayuan.jr.basemodule.AdvancePathView>
         <com.ramotion.foldingcell.FoldingCell
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/folding_cell"
@@ -38,11 +38,11 @@
                 android:id="@+id/cell_content_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@android:color/holo_green_dark"
+                android:background="@drawable/envelope"
                 android:visibility="gone">
                 <EditText
                     android:layout_width="match_parent"
-                    android:layout_height="250dp" />
+                    android:layout_height="300dp" />
                 <TextView
                     android:id="@+id/end"
                     android:layout_width="match_parent"
@@ -55,8 +55,8 @@
                 android:layout_height="wrap_content">
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:background="@drawable/timg" />
+                    android:layout_height="150dp"
+                    android:background="@drawable/envelope_face" />
             </FrameLayout>
         </com.ramotion.foldingcell.FoldingCell>
     </RelativeLayout>

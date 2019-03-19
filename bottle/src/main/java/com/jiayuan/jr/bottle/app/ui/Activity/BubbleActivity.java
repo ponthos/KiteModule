@@ -6,14 +6,14 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.jess.arms.base.BaseActivity;
 import com.jess.arms.di.component.AppComponent;
 import com.jiayuan.jr.bottle.R;
-import com.jiayuan.jr.bottle.app.utils.HearView;
+import com.jiayuan.jr.basemodule.HearView;
 
 import java.io.InputStream;
 
