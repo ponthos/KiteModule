@@ -31,7 +31,7 @@ public class AdvancePathView extends RelativeLayout {
     protected Random random;
     private Path mPath;
     private Paint mPaint;
-    protected PointF pointFStart, pointFEnd, pointFFirst, pointFSecond;
+    public PointF pointFStart, pointFEnd, pointFFirst, pointFSecond;
     protected Bitmap bitmap;
 
     private int[]colors ={Color.WHITE,Color.CYAN,Color.YELLOW,Color.BLACK ,Color.LTGRAY,Color.GREEN,Color.RED};
@@ -71,8 +71,8 @@ public class AdvancePathView extends RelativeLayout {
 
 
     protected void initPoint() {
-        pointFStart.x = getMeasuredWidth()/1;
-        pointFStart.y = getMeasuredHeight() - 10;
+        pointFStart.x = getMeasuredWidth() * 2 / 3;
+        pointFStart.y = getMeasuredHeight()*3/4;
 
         pointFEnd.y = 10;
         pointFEnd.x = 1;
@@ -204,11 +204,9 @@ public class AdvancePathView extends RelativeLayout {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 //这里在值变化的时候做相应的动作，我们是缩放图片，注意先设置缩放的起始点，坐标都是以view的左上角为原点
-                float value = (float) animation.getAnimatedValue();
-                view.setPivotX(view.getWidth()/2);
-                view.setPivotY(view.getHeight()/2);
-                view.setScaleX(value);
-                view.setScaleY(value);
+                PointF value = (PointF) animation.getAnimatedValue();
+                view.setX(value.x);
+                view.setY(value.y);
             }
         });
         //动画完成后有个缩小的动作
@@ -225,7 +223,7 @@ public class AdvancePathView extends RelativeLayout {
         });
         valueAnimator.start();
     }
-    public void moveEnvelope(final ImageView view){
+    public void moveEnvelope(final View view){
         PointF pointFFirst = this.pointFFirst;
         PointF pointFStart =  this.pointFEnd;
         PointF pointFEnd =this.pointFStart;
@@ -235,15 +233,17 @@ public class AdvancePathView extends RelativeLayout {
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
-//                PointF value = (PointF) animation.getAnimatedValue();
-//                view.setX(value.x);
-//                view.setY(value.y);
-                //这里在值变化的时候做相应的动作，我们是缩放图片，注意先设置缩放的起始点，坐标都是以view的左上角为原点
-                PointF valuef = (PointF) animation.getAnimatedValue();
+                PointF value = (PointF) animation.getAnimatedValue();
                 view.setPivotX(view.getWidth()/2);
                 view.setPivotY(view.getHeight()/2);
-                view.setScaleX(valuef.x);
-                view.setScaleY(valuef.y);
+                view.setX(value.x);
+                view.setY(value.y);
+                //这里在值变化的时候做相应的动作，我们是缩放图片，注意先设置缩放的起始点，坐标都是以view的左上角为原点
+//                PointF valuef = (PointF) animation.getAnimatedValue();
+//                view.setPivotX(view.getWidth()/2);
+//                view.setPivotY(view.getHeight()/2);
+//                view.setScaleX(valuef.x);
+//                view.setScaleY(valuef.y);
             }
         });
 

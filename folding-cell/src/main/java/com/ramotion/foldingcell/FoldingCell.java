@@ -212,7 +212,7 @@ public class FoldingCell extends RelativeLayout {
      *
      * @param skipAnimation if true - change state of cell instantly without animation
      */
-    public void fold(boolean skipAnimation,FoldingCell fc,ScrollingImageView scrollingBackground,AdvancePathView advance,ImageView imageView) {
+    public void fold(boolean skipAnimation,FoldingCell fc,ScrollingImageView scrollingBackground,AdvancePathView advance) {
         if (!mUnfolded || mAnimationInProgress) return;
 
         // get basic views
@@ -260,7 +260,7 @@ public class FoldingCell extends RelativeLayout {
                     FoldingCell.this.mAnimationInProgress = false;
                     FoldingCell.this.mUnfolded = false;
                     ViewCompat.setHasTransientState(FoldingCell.this, true);
-                    function(fc,scrollingBackground,advance,imageView);
+                    function(fc,scrollingBackground,advance);
                 }
             }
             );
@@ -332,9 +332,9 @@ public class FoldingCell extends RelativeLayout {
     /**
      * Toggle current state of FoldingCellLayout
      */
-    public void toggle(boolean skipAnimation, FoldingCell fc, ScrollingImageView scrollingBackground, AdvancePathView advance,ImageView imageView) {
+    public void toggle(boolean skipAnimation, FoldingCell fc, ScrollingImageView scrollingBackground, AdvancePathView advance) {
         if (this.mUnfolded) {
-            this.fold(skipAnimation,fc,scrollingBackground,advance,imageView);
+            this.fold(skipAnimation,fc,scrollingBackground,advance);
         } else {
             this.unfold(skipAnimation);
             this.requestLayout();

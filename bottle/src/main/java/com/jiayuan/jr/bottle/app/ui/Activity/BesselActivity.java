@@ -48,6 +48,7 @@ public class BesselActivity extends BaseActivity {
         fc = findViewById(R.id.folding_cell);
         scrollingBackground = findViewById(R.id.scrolling_background);
         end = findViewById(R.id.end);
+        scrollingBackground.stop();
         // get our folding cell
 
         // get our folding cell
@@ -76,7 +77,7 @@ public class BesselActivity extends BaseActivity {
         end.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fc.toggle(false, fc, scrollingBackground, advance, imageView);
+                fc.toggle(false, fc, scrollingBackground, advance);
 //                advance.addHeart();
             }
         });

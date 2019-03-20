@@ -12,11 +12,6 @@
         android:padding="5dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <!--<com.jiayuan.jr.bottle.app.utils.BasicPathView-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:id="@+id/basic"-->
-            <!--android:background="#ffffff" />-->
         <com.q42.android.scrollingimageview.ScrollingImageView
             android:id="@+id/scrolling_background"
             android:layout_width="match_parent"
@@ -24,11 +19,10 @@
             scrolling_image_view:speed="1dp"
             scrolling_image_view:src="@drawable/bg" />
         <com.jiayuan.jr.basemodule.AdvancePathView
-            android:background="#00ffffff"
-            android:layout_width="match_parent"
             android:id="@+id/advance"
-            android:layout_height="match_parent">
-        </com.jiayuan.jr.basemodule.AdvancePathView>
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#00ffffff"/>
         <com.ramotion.foldingcell.FoldingCell
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/folding_cell"
