@@ -58,10 +58,8 @@ public class BesselActivity extends BaseActivity {
 //        fc.initialize(1000, Color.WHITE, 3);
 //        fc.initialize(30, 1000, Color.DKGRAY, 2);
         // or with camera height parameter
-        ArrayList<Drawable> drawables = new ArrayList<Drawable>();
-        drawables.add(getResources().getDrawable(R.drawable.envelope2));
-        drawables.add(getResources().getDrawable(R.drawable.envelope3));
-        fc.initialize(300, 1000, drawables, 3);
+
+
         // attach click listener to folding cell
 //        fc.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -93,5 +91,20 @@ public class BesselActivity extends BaseActivity {
 
             }
         });
+    }
+    int MeasuredWidth;
+    int MeasuredHeight;
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if(hasFocus){
+            View view=getWindow().getDecorView();
+            MeasuredWidth=view.getMeasuredWidth();
+            MeasuredHeight=view.getMeasuredHeight();
+            ArrayList<Drawable> drawables = new ArrayList<Drawable>();
+            drawables.add(getResources().getDrawable(R.drawable.envelope2));
+            drawables.add(getResources().getDrawable(R.drawable.envelope3));
+            fc.initialize( 1000, drawables, 2);
+        }
     }
 }

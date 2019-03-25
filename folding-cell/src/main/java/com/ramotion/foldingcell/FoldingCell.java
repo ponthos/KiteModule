@@ -14,9 +14,9 @@ import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import com.jiayuan.jr.basemodule.AdvancePathView;
+import com.jiayuan.jr.basemodule.AutoImageView;
 import com.q42.android.scrollingimageview.ScrollingImageView;
 import com.ramotion.foldingcell.animations.AnimationEndListener;
 import com.ramotion.foldingcell.animations.FoldAnimation;
@@ -27,12 +27,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.view.ViewCompat;
 
 /**
  * Very first implementation of Folding Cell by Ramotion for Android platform
  */
-public class FoldingCell extends RelativeLayout {
+public class FoldingCell extends ConstraintLayout {
 
     // state variables
     private boolean mUnfolded;
@@ -171,8 +172,8 @@ public class FoldingCell extends RelativeLayout {
         contentView.setVisibility(GONE);
 
         // Measure views and take a bitmaps to replace real views with images
-        Bitmap bitmapFromTitleView = measureViewAndGetBitmap(titleView, this.getMeasuredWidth());
-        Bitmap bitmapFromContentView = measureViewAndGetBitmap(contentView, this.getMeasuredWidth());
+        Bitmap bitmapFromTitleView = measureViewAndGetBitmap(titleView, this.getMeasuredWidth(),this.getMeasuredHeight());
+        Bitmap bitmapFromContentView = measureViewAndGetBitmap(contentView, this.getMeasuredWidth(),this.getMeasuredHeight());
 
         if (skipAnimation) {
             contentView.setVisibility(VISIBLE);
@@ -226,8 +227,8 @@ public class FoldingCell extends RelativeLayout {
         contentView.setVisibility(GONE);
 
         // make bitmaps from title and content views
-        Bitmap bitmapFromTitleView = measureViewAndGetBitmap(titleView, this.getMeasuredWidth());
-        Bitmap bitmapFromContentView = measureViewAndGetBitmap(contentView, this.getMeasuredWidth());
+        Bitmap bitmapFromTitleView = measureViewAndGetBitmap(titleView, this.getMeasuredWidth(),this.getMeasuredHeight());
+        Bitmap bitmapFromContentView = measureViewAndGetBitmap(contentView, this.getMeasuredWidth(),this.getMeasuredHeight());
 
         if (skipAnimation) {
             contentView.setVisibility(GONE);
@@ -288,8 +289,8 @@ public class FoldingCell extends RelativeLayout {
         contentView.setVisibility(GONE);
 
         // make bitmaps from title and content views
-        Bitmap bitmapFromTitleView = measureViewAndGetBitmap(titleView, this.getMeasuredWidth());
-        Bitmap bitmapFromContentView = measureViewAndGetBitmap(contentView, this.getMeasuredWidth());
+        Bitmap bitmapFromTitleView = measureViewAndGetBitmap(titleView, this.getMeasuredWidth(),this.getMeasuredHeight());
+        Bitmap bitmapFromContentView = measureViewAndGetBitmap(contentView, this.getMeasuredWidth(),this.getMeasuredHeight());
 
         if (skipAnimation) {
             contentView.setVisibility(GONE);
@@ -450,8 +451,8 @@ public class FoldingCell extends RelativeLayout {
      * 修改折叠为图片折叠
      */
     int i=0;
-    protected ImageView createBackSideView(int height) {
-        ImageView imageView = new ImageView(getContext());
+    protected AutoImageView createBackSideView(int height) {
+        AutoImageView imageView = new AutoImageView(getContext());
 
         if(mbackSideDrawables.size()>0){
             imageView.setImageDrawable(mbackSideDrawables.get(i));
@@ -465,8 +466,8 @@ public class FoldingCell extends RelativeLayout {
         }else{
             imageView.setImageDrawable(mbackSideDrawable);
         }
-        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-        imageView.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height));
+//      imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+        imageView.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 0));
         return imageView;
     }
 
@@ -490,9 +491,9 @@ public class FoldingCell extends RelativeLayout {
      * @param parentWidth result bitmap width
      * @return bitmap from specified view
      */
-    protected Bitmap measureViewAndGetBitmap(View view, int parentWidth) {
+    protected Bitmap measureViewAndGetBitmap(View view, int parentWidth,int parentHight) {
         int specW = View.MeasureSpec.makeMeasureSpec(parentWidth, View.MeasureSpec.EXACTLY);
-        int specH = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+        int specH = View.MeasureSpec.makeMeasureSpec(parentHight, View.MeasureSpec.UNSPECIFIED);
         view.measure(specW, specH);
         view.layout(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight());
         Bitmap b = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);

@@ -26,31 +26,37 @@
         <com.ramotion.foldingcell.FoldingCell
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/folding_cell"
+            app:layout_constraintDimensionRatio="2:2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <FrameLayout
+            <LinearLayout
+                android:orientation="vertical"
                 android:id="@+id/cell_content_view"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:background="@drawable/envelope"
+                app:layout_constraintDimensionRatio="2:2"
                 android:visibility="gone">
                 <EditText
                     android:layout_width="match_parent"
-                    android:layout_height="300dp" />
+                    android:layout_height="wrap_content"
+                    />
                 <TextView
                     android:id="@+id/end"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="结束"/>
-            </FrameLayout>
+            </LinearLayout>
             <FrameLayout
+                app:layout_constraintDimensionRatio="2:1"
+                android:background="@drawable/envelope_face"
                 android:id="@+id/cell_title_view"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="0dp">
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="150dp"
-                    android:background="@drawable/envelope_face" />
+                    android:layout_height="wrap_content"
+                    />
             </FrameLayout>
         </com.ramotion.foldingcell.FoldingCell>
     </RelativeLayout>

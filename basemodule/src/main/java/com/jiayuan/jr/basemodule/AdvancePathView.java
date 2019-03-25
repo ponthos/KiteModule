@@ -68,8 +68,6 @@ public class AdvancePathView extends RelativeLayout {
         random = new Random();
         bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.timg);
     }
-
-
     protected void initPoint() {
         pointFStart.x = getMeasuredWidth() * 2 / 3;
         pointFStart.y = getMeasuredHeight()*3/4;
