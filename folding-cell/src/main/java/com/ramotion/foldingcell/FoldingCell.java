@@ -172,8 +172,8 @@ public class FoldingCell extends ConstraintLayout {
         contentView.setVisibility(GONE);
 
         // Measure views and take a bitmaps to replace real views with images
-        Bitmap bitmapFromTitleView = measureViewAndGetBitmap(titleView, this.getMeasuredWidth(),this.getMeasuredHeight());
-        Bitmap bitmapFromContentView = measureViewAndGetBitmap(contentView, this.getMeasuredWidth(),this.getMeasuredHeight());
+        Bitmap bitmapFromTitleView = measureViewAndGetBitmap(titleView, this.getMeasuredWidth(),this.getMeasuredHeight()/2);
+        Bitmap bitmapFromContentView = measureViewAndGetBitmap(contentView, this.getMeasuredWidth(),this.getMeasuredHeight()/2);
 
         if (skipAnimation) {
             contentView.setVisibility(VISIBLE);
@@ -227,8 +227,8 @@ public class FoldingCell extends ConstraintLayout {
         contentView.setVisibility(GONE);
 
         // make bitmaps from title and content views
-        Bitmap bitmapFromTitleView = measureViewAndGetBitmap(titleView, this.getMeasuredWidth(),this.getMeasuredHeight());
-        Bitmap bitmapFromContentView = measureViewAndGetBitmap(contentView, this.getMeasuredWidth(),this.getMeasuredHeight());
+        Bitmap bitmapFromTitleView = measureViewAndGetBitmap(titleView, this.getMeasuredWidth(),this.getMeasuredHeight()/2);
+        Bitmap bitmapFromContentView = measureViewAndGetBitmap(contentView, this.getMeasuredWidth(),this.getMeasuredHeight()/2);
 
         if (skipAnimation) {
             contentView.setVisibility(GONE);
@@ -239,6 +239,13 @@ public class FoldingCell extends ConstraintLayout {
         } else {
             ViewCompat.setHasTransientState(this, true);
             // create empty layout for folding animation
+
+
+
+
+
+
+
             final LinearLayout foldingLayout = createAndPrepareFoldingContainer();
             // add that layout to structure
             this.addView(foldingLayout);
@@ -287,10 +294,9 @@ public class FoldingCell extends ConstraintLayout {
         // hide title and content views
         titleView.setVisibility(GONE);
         contentView.setVisibility(GONE);
-
         // make bitmaps from title and content views
-        Bitmap bitmapFromTitleView = measureViewAndGetBitmap(titleView, this.getMeasuredWidth(),this.getMeasuredHeight());
-        Bitmap bitmapFromContentView = measureViewAndGetBitmap(contentView, this.getMeasuredWidth(),this.getMeasuredHeight());
+        Bitmap bitmapFromTitleView = measureViewAndGetBitmap(titleView, this.getMeasuredWidth(),this.getMeasuredHeight()/2);
+        Bitmap bitmapFromContentView = measureViewAndGetBitmap(contentView, this.getMeasuredWidth(),this.getMeasuredHeight()/2);
 
         if (skipAnimation) {
             contentView.setVisibility(GONE);
@@ -492,9 +498,11 @@ public class FoldingCell extends ConstraintLayout {
      * @return bitmap from specified view
      */
     protected Bitmap measureViewAndGetBitmap(View view, int parentWidth,int parentHight) {
+        //2019/03/26修改
+//        int specW = View.MeasureSpec.makeMeasureSpec(parentWidth, View.MeasureSpec.AT_MOST);
         int specW = View.MeasureSpec.makeMeasureSpec(parentWidth, View.MeasureSpec.EXACTLY);
         int specH = View.MeasureSpec.makeMeasureSpec(parentHight, View.MeasureSpec.UNSPECIFIED);
-        view.measure(specW, specH);
+        view.measure(specW, specH-=);
         view.layout(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight());
         Bitmap b = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas c = new Canvas(b);
@@ -533,7 +541,7 @@ public class FoldingCell extends ConstraintLayout {
         int animationDuration = partAnimationDuration - delay;
         for (int i = 1; i < viewHeights.size(); i++) {
             int toHeight = fromHeight + viewHeights.get(i);
-            HeightAnimation heightAnimation = new HeightAnimation(this, fromHeight, toHeight, animationDuration)
+            HeightAnimation heightAnimation = new HeightAnimation(this, fromHeight/2, toHeight/2, animationDuration)
                     .withInterpolator(new DecelerateInterpolator());
             heightAnimation.setStartOffset(delay);
             heightAnimations.add(heightAnimation);
@@ -557,7 +565,7 @@ public class FoldingCell extends ConstraintLayout {
         int fromHeight = viewHeights.get(0);
         for (int i = 1; i < viewHeights.size(); i++) {
             int toHeight = fromHeight + viewHeights.get(i);
-            heightAnimations.add(new HeightAnimation(this, toHeight, fromHeight, partAnimationDuration)
+            heightAnimations.add(new HeightAnimation(this, toHeight/2, fromHeight/2, partAnimationDuration)
                     .withInterpolator(new DecelerateInterpolator()));
             fromHeight = toHeight;
         }
