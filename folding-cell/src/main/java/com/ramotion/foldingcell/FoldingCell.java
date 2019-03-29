@@ -502,7 +502,7 @@ public class FoldingCell extends ConstraintLayout {
 //        int specW = View.MeasureSpec.makeMeasureSpec(parentWidth, View.MeasureSpec.AT_MOST);
         int specW = View.MeasureSpec.makeMeasureSpec(parentWidth, View.MeasureSpec.EXACTLY);
         int specH = View.MeasureSpec.makeMeasureSpec(parentHight, View.MeasureSpec.UNSPECIFIED);
-        view.measure(specW, specH-=);
+        view.measure(specW, specH);
         view.layout(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight());
         Bitmap b = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas c = new Canvas(b);
