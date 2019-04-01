@@ -21,7 +21,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name="connectmodule.Ui.Activity.UserActivity"
+            android:name="com.jiayuan.jr.kiteshell.Ui.Activity.UserActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -29,7 +29,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!--<activity android:name="com.jiayuan.jr.connectmodule.Ui.Activity.UserActivity" />-->
+        <!--<activity android:name="com.jiayuan.jr.com.jiayuan.jr.kiteshell.Ui.Activity.UserActivity" />-->
         <!-- 只要依赖 AutoSize 就必须填写设计图尺寸, 否则报错, 不想使用 AutoSize 就不要依赖 AutoSize 只要填写完设计图的尺寸, AutoSize 就会自动启动, 以下 dp 尺寸是根据公式 px / (dpi / 160) 求出, 运算时使用测试机的 dpi 即可, AndroidAutoSize 的详细介绍请看这里 https://juejin.im/post/5bce688e6fb9a05cf715d1c2 -->
         <meta-data
             android:name="design_width_in_dp"
@@ -39,7 +39,7 @@
             android:value="640"/>
         <!--arms配置-->
         <meta-data
-            android:name="connectmodule.GlobalConfiguration"
+            android:name="com.jiayuan.jr.kiteshell.GlobalConfiguration"
             android:value="ConfigModule"/>
     </application>
 

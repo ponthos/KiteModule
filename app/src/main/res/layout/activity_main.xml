@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/constraint"
-    tools:context="connectmodule.Ui.Activity.UserActivity">
+    tools:context=".Ui.Activity.UserActivity">
 
     <FrameLayout
         android:id="@+id/fragment"

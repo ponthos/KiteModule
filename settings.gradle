@@ -1,1 +1,1 @@
-include ':app', ':basemodule', ':modelmodule', ':bannermodule', ':bottle', ':folding-cell'
+include ':app', ':basemodule', ':modelmodule', ':bannermodule', ':kitemodule', ':foldingmodule', ':mvpmodule', ':CommonService', ':module_zhihu', ':CommonSDK', ':CommonRes'

@@ -5,15 +5,21 @@
       <GradleProjectSettings>
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="gradleHome" value="$USER_HOME$/Downloads/gradle-5.2.1" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/CommonRes" />
+            <option value="$PROJECT_DIR$/CommonSDK" />
+            <option value="$PROJECT_DIR$/CommonService" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/bannermodule" />
             <option value="$PROJECT_DIR$/basemodule" />
-            <option value="$PROJECT_DIR$/bottle" />
-            <option value="$PROJECT_DIR$/folding-cell" />
+            <option value="$PROJECT_DIR$/foldingmodule" />
+            <option value="$PROJECT_DIR$/kitemodule" />
             <option value="$PROJECT_DIR$/modelmodule" />
+            <option value="$PROJECT_DIR$/module_zhihu" />
+            <option value="$PROJECT_DIR$/mvpmodule" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
