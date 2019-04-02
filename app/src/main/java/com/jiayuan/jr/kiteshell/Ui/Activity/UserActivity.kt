@@ -63,7 +63,7 @@ class UserActivity : BaseActivity<BasePresenter<*, *>>(), UserContract.View {
         mine!!.setOnClickListener {
             // 1. 应用内简单的跳转(通过URL跳转在'进阶用法'中)
             //                    ARouter.getInstance().build("/test/activity").navigation();
-            ARouter.getInstance().build("/kitemodule/bessel").navigation()
+            ARouter.getInstance().build("/kite_module/bessel_activity").navigation()
             //                    // 2. 跳转并携带参数
             //                    ARouter.getInstance().build("/test/1")
             //                            .withLong("key1", 666L)
@@ -72,7 +72,7 @@ class UserActivity : BaseActivity<BasePresenter<*, *>>(), UserContract.View {
             //                            .navigation();
         }
         home!!.setOnClickListener { selectTab(0) }
-        other!!.setOnClickListener { ARouter.getInstance().build("/kitemodule/bubble").navigation() }
+        other!!.setOnClickListener { ARouter.getInstance().build("/kite_module/bubble_activity").navigation() }
         //        banner=findViewById(R.id.banner);
 
     }

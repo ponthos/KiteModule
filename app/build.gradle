@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
 apply plugin: 'com.jakewharton.butterknife'
+apply plugin: 'kotlin-kapt'
 android {
     compileSdkVersion rootProject.ext.android.compileSdkVersion
     defaultConfig {
@@ -16,6 +17,7 @@ android {
                 arguments = [AROUTER_MODULE_NAME: project.getName()]
             }
         }
+
     }
     compileOptions {
         incremental = false
@@ -29,7 +31,12 @@ android {
         }
     }
 }
-
+kapt {
+    arguments {
+        arg("moduleName", project.getName())
+    }
+    generateStubs = true
+}
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation rootProject.ext.dependencies.appcompat_v7
@@ -46,6 +53,8 @@ dependencies {
     implementation 'com.jakewharton:butterknife:10.0.0'
     annotationProcessor "com.jakewharton:butterknife-compiler:10.0.0"
     //Butterknife 插件, 很多人因为没加这个而报错, 切记!!!
+//    kapt 'com.alibaba:arouter-annotation:1.2.2'
+    kapt 'com.alibaba:arouter-compiler:1.2.2'
     annotationProcessor 'com.alibaba:arouter-compiler:1.2.2'
     /***
      * MVPArms配置

@@ -1,13 +1,11 @@
-package com.jiayuan.jr.kitemodule;
+package com.jiayuan.jr.kitemodule
 
 /**
  * Example local unit test, which will execute on the development machine (host).
  *
- * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
+ * @see [Testing documentation](http://d.android.com/tools/testing)
  */
-public class ExampleUnitTest {
-//    @Test
+class ExampleUnitTest//    @Test
 //    public void addition_isCorrect() {
 //        assertEquals(4, 2 + 2);
 //    }
-}

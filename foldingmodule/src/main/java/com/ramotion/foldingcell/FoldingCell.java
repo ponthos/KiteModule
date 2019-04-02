@@ -239,13 +239,6 @@ public class FoldingCell extends ConstraintLayout {
         } else {
             ViewCompat.setHasTransientState(this, true);
             // create empty layout for folding animation
-
-
-
-
-
-
-
             final LinearLayout foldingLayout = createAndPrepareFoldingContainer();
             // add that layout to structure
             this.addView(foldingLayout);
