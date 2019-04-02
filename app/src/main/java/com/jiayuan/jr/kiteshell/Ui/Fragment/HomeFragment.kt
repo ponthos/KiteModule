@@ -15,10 +15,10 @@ import com.jiayuan.jr.kiteshell.R
 import connectmodule.Api
 import connectmodule.GlideImageLoader
 import java.util.*
-
+import kotlinx.android.synthetic.main.fragment_home.*
 class HomeFragment : BaseFragment<IPresenter>() {
-    @BindView(R.id.banner)
-    internal var banner: Banner? = null
+//    @BindView(R.id.banner)
+//    internal var banner: Banner? = null
     internal var images: MutableList<String> = ArrayList()
     internal var titles: MutableList<String> = ArrayList()
     //如果你需要考虑更好的体验，可以这么操作

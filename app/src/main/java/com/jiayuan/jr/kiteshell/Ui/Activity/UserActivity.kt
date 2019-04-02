@@ -3,13 +3,10 @@ package com.jiayuan.jr.kiteshell.Ui.Activity
 //
 
 import android.os.Bundle
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
-import butterknife.BindView
 import com.alibaba.android.arouter.launcher.ARouter
-import com.jess.arms.base.BaseActivity
 import com.jess.arms.base.DefaultAdapter
 import com.jess.arms.di.component.AppComponent
 import com.jess.arms.mvp.BasePresenter
@@ -17,18 +14,21 @@ import com.jiayuan.jr.connectmodule.Component.DaggerUserComponent
 import com.jiayuan.jr.connectmodule.Contract.UserContract
 import com.jiayuan.jr.connectmodule.Module.UserModule
 import com.jiayuan.jr.kiteshell.R
+import com.jiayuan.jr.kiteshell.Ui.BaseActivity
 import com.jiayuan.jr.kiteshell.Ui.Fragment.HomeFragment
 import com.jiayuan.jr.kiteshell.Ui.Fragment.MineFragment
 import com.jiayuan.jr.kiteshell.Ui.Fragment.OtherFragment
+import kotlinx.android.synthetic.main.activity_main.*
 
+@Suppress("DEPRECATION")
 class UserActivity : BaseActivity<BasePresenter<*, *>>(), UserContract.View {
-
-    @BindView(R.id.home)
-    internal var home: TextView? = null
-    @BindView(R.id.other)
-    internal var other: TextView? = null
-    @BindView(R.id.mine)
-    internal var mine: TextView? = null
+//
+//    @BindView(R.id.home)
+//     var home: TextView? = null
+//    @BindView(R.id.other)
+//     var other: TextView? = null
+//    @BindView(R.id.mine)
+//     var mine: TextView ?= null
 
     private lateinit var homeFragment: Fragment
     private lateinit var otherFragment: Fragment
@@ -41,13 +41,12 @@ class UserActivity : BaseActivity<BasePresenter<*, *>>(), UserContract.View {
 //    mineFragment = MineFragment()
 //    fragment = arrayOf(homeFragment, otherFragment, mineFragment)
     override fun setupActivityComponent(appComponent: AppComponent) {
-        DaggerUserComponent
+    DaggerUserComponent
                 .builder()
                 .appComponent(appComponent)
                 .userModule(UserModule(this))
                 .build()
                 .inject(this)
-
     }
 
     override fun initView(savedInstanceState: Bundle?): Int {
@@ -55,13 +54,13 @@ class UserActivity : BaseActivity<BasePresenter<*, *>>(), UserContract.View {
     }
 
     override fun initData(savedInstanceState: Bundle?) {
-        //        mine=findViewById(R.id.mine);
+//        mine=findViewById(R.id.mine);
         homeFragment = HomeFragment()
         otherFragment = OtherFragment()
         mineFragment = MineFragment()
         fragment = arrayOf(homeFragment, otherFragment, mineFragment)
         selectTab(0)
-        mine!!.setOnClickListener { v ->
+        mine!!.setOnClickListener {
             // 1. 应用内简单的跳转(通过URL跳转在'进阶用法'中)
             //                    ARouter.getInstance().build("/test/activity").navigation();
             ARouter.getInstance().build("/kitemodule/bessel").navigation()
@@ -72,9 +71,8 @@ class UserActivity : BaseActivity<BasePresenter<*, *>>(), UserContract.View {
             //                            .withObject("key4", new Test("Jack", "Rose"))
             //                            .navigation();
         }
-        var home1 = home
-        (if (home1 != null) home1 else throw NullPointerException("Expression 'home' must not be null")).setOnClickListener { v -> selectTab(0) }
-        other!!.setOnClickListener { v -> ARouter.getInstance().build("/kitemodule/bubble").navigation() }
+        home!!.setOnClickListener { selectTab(0) }
+        other!!.setOnClickListener { ARouter.getInstance().build("/kitemodule/bubble").navigation() }
         //        banner=findViewById(R.id.banner);
 
     }
