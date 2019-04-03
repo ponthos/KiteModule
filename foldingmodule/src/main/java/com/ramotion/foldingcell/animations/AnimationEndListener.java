@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
+import android.widget.ImageView;
 
 import com.jiayuan.jr.basemodule.AdvancePathView;
 import com.q42.android.scrollingimageview.ScrollingImageView;
@@ -35,9 +36,9 @@ public abstract class AnimationEndListener implements Animation.AnimationListene
     public void onAnimationEnd(Animation animation) {
         // do nothing
     }
-    public void function(FoldingCell fc, ScrollingImageView scrollingBackground, AdvancePathView advance){
+    public void function(FoldingCell fc, ScrollingImageView scrollingBackground, AdvancePathView advance, ImageView imageView_timg){
         scrollingBackground.start();
-        moveEnvelope(fc,advance.pointFEnd,advance.pointFFirst,advance.pointFStart,advance);
+        moveEnvelope(fc,advance.pointFEnd,advance.pointFFirst,advance.pointFStart,advance,imageView_timg,scrollingBackground);
     }
     public class BezierEvaluator implements TypeEvaluator<PointF> {
 
@@ -55,7 +56,9 @@ public abstract class AnimationEndListener implements Animation.AnimationListene
             return result;
         }
     }
-    public void moveEnvelope(final View view,PointF pointFStart,PointF pointFFirst,PointF pointFEnd,AdvancePathView advance){
+    public void moveEnvelope(final View view,PointF pointFStart,PointF pointFFirst,PointF pointFEnd,AdvancePathView advance,ImageView imageView_timg,ScrollingImageView scrollingImageView){
+        view.setPivotX(0);
+        view.setPivotY(0);
         ValueAnimator animator = ValueAnimator.ofObject(new BezierEvaluator(pointFFirst), pointFStart, pointFEnd);
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
@@ -70,7 +73,7 @@ public abstract class AnimationEndListener implements Animation.AnimationListene
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
                 ((ViewGroup)view.getParent()).removeView(view);
-                advance.addHeart();
+                advance.addHeart(imageView_timg,scrollingImageView);
             }
         });
         ObjectAnimator af = ObjectAnimator.ofFloat(view, "alpha", 1f, 0);
@@ -80,13 +83,23 @@ public abstract class AnimationEndListener implements Animation.AnimationListene
                 super.onAnimationEnd(animation);
             }
         });
-        ObjectAnimator scaleX = ObjectAnimator.ofFloat(view, "scaleX", 1f, 0);
-        ObjectAnimator scaleY = ObjectAnimator.ofFloat(view, "scaleY", 1f, 0);
         AnimatorSet set = new AnimatorSet();
         set.setInterpolator(new AccelerateInterpolator());
         set.setDuration(5000);
-        set.play(animator).with(af).with(scaleX).with(scaleY);
-        set.start();
-
+        set.play(animator).with(af);
+        ObjectAnimator scaleX = ObjectAnimator.ofFloat(view, "scaleX", 1f, 0.1f);
+        ObjectAnimator scaleY = ObjectAnimator.ofFloat(view, "scaleY", 1f, 0.1f);
+        scaleX.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                set.start();
+            }
+        });
+        AnimatorSet set_scale_XY = new AnimatorSet();
+        set_scale_XY.setInterpolator(new AccelerateInterpolator());
+        set_scale_XY.play(scaleX).with(scaleY);
+        set_scale_XY.setDuration(2000);
+        set_scale_XY.start();
     }
 }

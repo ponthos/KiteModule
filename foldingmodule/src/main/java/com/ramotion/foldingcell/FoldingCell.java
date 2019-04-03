@@ -172,8 +172,8 @@ public class FoldingCell extends ConstraintLayout {
         contentView.setVisibility(GONE);
 
         // Measure views and take a bitmaps to replace real views with images
-        Bitmap bitmapFromTitleView = measureViewAndGetBitmap(titleView, this.getMeasuredWidth(),this.getMeasuredHeight()/2);
-        Bitmap bitmapFromContentView = measureViewAndGetBitmap(contentView, this.getMeasuredWidth(),this.getMeasuredHeight()/2);
+        Bitmap bitmapFromTitleView = measureViewAndGetBitmap(titleView, this.getMeasuredWidth(),(this.getMeasuredWidth()/2));
+        Bitmap bitmapFromContentView = measureViewAndGetBitmap(contentView, this.getMeasuredWidth(),this.getMeasuredWidth());
 
         if (skipAnimation) {
             contentView.setVisibility(VISIBLE);
@@ -186,7 +186,7 @@ public class FoldingCell extends ConstraintLayout {
             final LinearLayout foldingLayout = createAndPrepareFoldingContainer();
             this.addView(foldingLayout);
             // calculate heights of animation parts
-            ArrayList<Integer> heights = calculateHeightsForAnimationParts(titleView.getHeight(), contentView.getHeight(), mAdditionalFlipsCount);
+            ArrayList<Integer> heights = calculateHeightsForAnimationParts((getMeasuredWidth()/2),getMeasuredWidth(),  mAdditionalFlipsCount);
             // create list with animation parts for animation
             ArrayList<FoldingCellView> foldingCellElements = prepareViewsForAnimation(heights, bitmapFromTitleView, bitmapFromContentView);
             // start unfold animation with end listener
@@ -213,7 +213,7 @@ public class FoldingCell extends ConstraintLayout {
      *
      * @param skipAnimation if true - change state of cell instantly without animation
      */
-    public void fold(boolean skipAnimation,FoldingCell fc,ScrollingImageView scrollingBackground,AdvancePathView advance) {
+    public void fold(boolean skipAnimation,FoldingCell fc,ScrollingImageView scrollingBackground,AdvancePathView advance,ImageView imageView_timg) {
         if (!mUnfolded || mAnimationInProgress) return;
 
         // get basic views
@@ -226,9 +226,9 @@ public class FoldingCell extends ConstraintLayout {
         titleView.setVisibility(GONE);
         contentView.setVisibility(GONE);
 
-        // make bitmaps from title and content views
-        Bitmap bitmapFromTitleView = measureViewAndGetBitmap(titleView, this.getMeasuredWidth(),this.getMeasuredHeight()/2);
-        Bitmap bitmapFromContentView = measureViewAndGetBitmap(contentView, this.getMeasuredWidth(),this.getMeasuredHeight()/2);
+        // Measure views and take a bitmaps to replace real views with images
+        Bitmap bitmapFromTitleView = measureViewAndGetBitmap(titleView, this.getMeasuredWidth(),(this.getMeasuredWidth()/2));
+        Bitmap bitmapFromContentView = measureViewAndGetBitmap(contentView, this.getMeasuredWidth(),this.getMeasuredWidth());
 
         if (skipAnimation) {
             contentView.setVisibility(GONE);
@@ -244,7 +244,7 @@ public class FoldingCell extends ConstraintLayout {
             this.addView(foldingLayout);
 
             // calculate heights of animation parts
-            ArrayList<Integer> heights = calculateHeightsForAnimationParts(titleView.getHeight(), contentView.getHeight(), mAdditionalFlipsCount);
+            ArrayList<Integer> heights = calculateHeightsForAnimationParts((getMeasuredWidth()/2),getMeasuredWidth(), mAdditionalFlipsCount);
             // create list with animation parts for animation
             ArrayList<FoldingCellView> foldingCellElements = prepareViewsForAnimation(heights, bitmapFromTitleView, bitmapFromContentView);
             int childCount = foldingCellElements.size();
@@ -261,7 +261,7 @@ public class FoldingCell extends ConstraintLayout {
                     FoldingCell.this.mAnimationInProgress = false;
                     FoldingCell.this.mUnfolded = false;
                     ViewCompat.setHasTransientState(FoldingCell.this, true);
-                    function(fc,scrollingBackground,advance);
+                    function(fc,scrollingBackground,advance,imageView_timg);
                 }
             }
             );
@@ -287,9 +287,9 @@ public class FoldingCell extends ConstraintLayout {
         // hide title and content views
         titleView.setVisibility(GONE);
         contentView.setVisibility(GONE);
-        // make bitmaps from title and content views
-        Bitmap bitmapFromTitleView = measureViewAndGetBitmap(titleView, this.getMeasuredWidth(),this.getMeasuredHeight()/2);
-        Bitmap bitmapFromContentView = measureViewAndGetBitmap(contentView, this.getMeasuredWidth(),this.getMeasuredHeight()/2);
+        // Measure views and take a bitmaps to replace real views with images
+        Bitmap bitmapFromTitleView = measureViewAndGetBitmap(titleView, this.getMeasuredWidth(),(this.getMeasuredWidth()/2));
+        Bitmap bitmapFromContentView = measureViewAndGetBitmap(contentView, this.getMeasuredWidth(),this.getMeasuredWidth());
 
         if (skipAnimation) {
             contentView.setVisibility(GONE);
@@ -305,7 +305,7 @@ public class FoldingCell extends ConstraintLayout {
             this.addView(foldingLayout);
 
             // calculate heights of animation parts
-            ArrayList<Integer> heights = calculateHeightsForAnimationParts(titleView.getHeight(), contentView.getHeight(), mAdditionalFlipsCount);
+            ArrayList<Integer> heights = calculateHeightsForAnimationParts((getMeasuredWidth()/2),getMeasuredWidth(),  mAdditionalFlipsCount);
             // create list with animation parts for animation
             ArrayList<FoldingCellView> foldingCellElements = prepareViewsForAnimation(heights, bitmapFromTitleView, bitmapFromContentView);
             int childCount = foldingCellElements.size();
@@ -332,9 +332,9 @@ public class FoldingCell extends ConstraintLayout {
     /**
      * Toggle current state of FoldingCellLayout
      */
-    public void toggle(boolean skipAnimation, FoldingCell fc, ScrollingImageView scrollingBackground, AdvancePathView advance) {
+    public void toggle(boolean skipAnimation, FoldingCell fc, ScrollingImageView scrollingBackground, AdvancePathView advance,ImageView imageView_timg) {
         if (this.mUnfolded) {
-            this.fold(skipAnimation,fc,scrollingBackground,advance);
+            this.fold(skipAnimation,fc,scrollingBackground,advance,imageView_timg);
         } else {
             this.unfold(skipAnimation);
             this.requestLayout();
@@ -496,7 +496,7 @@ public class FoldingCell extends ConstraintLayout {
         int specW = View.MeasureSpec.makeMeasureSpec(parentWidth, View.MeasureSpec.EXACTLY);
         int specH = View.MeasureSpec.makeMeasureSpec(parentHight, View.MeasureSpec.UNSPECIFIED);
         view.measure(specW, specH);
-        view.layout(0, 0, view.getMeasuredWidth(), view.getMeasuredHeight());
+        view.layout(0, 0, view.getMeasuredWidth(), view.getMeasuredWidth());
         Bitmap b = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas c = new Canvas(b);
         c.translate(-view.getScrollX(), -view.getScrollY());
@@ -534,7 +534,7 @@ public class FoldingCell extends ConstraintLayout {
         int animationDuration = partAnimationDuration - delay;
         for (int i = 1; i < viewHeights.size(); i++) {
             int toHeight = fromHeight + viewHeights.get(i);
-            HeightAnimation heightAnimation = new HeightAnimation(this, fromHeight/2, toHeight/2, animationDuration)
+            HeightAnimation heightAnimation = new HeightAnimation(this, fromHeight, toHeight, animationDuration)
                     .withInterpolator(new DecelerateInterpolator());
             heightAnimation.setStartOffset(delay);
             heightAnimations.add(heightAnimation);
@@ -558,7 +558,7 @@ public class FoldingCell extends ConstraintLayout {
         int fromHeight = viewHeights.get(0);
         for (int i = 1; i < viewHeights.size(); i++) {
             int toHeight = fromHeight + viewHeights.get(i);
-            heightAnimations.add(new HeightAnimation(this, toHeight/2, fromHeight/2, partAnimationDuration)
+            heightAnimations.add(new HeightAnimation(this, toHeight, fromHeight, partAnimationDuration)
                     .withInterpolator(new DecelerateInterpolator()));
             fromHeight = toHeight;
         }
