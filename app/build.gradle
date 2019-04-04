@@ -35,7 +35,6 @@ kapt {
     arguments {
         arg("moduleName", project.getName())
     }
-    generateStubs = true
 }
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
