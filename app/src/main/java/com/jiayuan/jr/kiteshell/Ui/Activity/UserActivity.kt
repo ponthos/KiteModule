@@ -10,7 +10,7 @@ import com.alibaba.android.arouter.launcher.ARouter
 import com.jess.arms.base.DefaultAdapter
 import com.jess.arms.di.component.AppComponent
 import com.jess.arms.mvp.BasePresenter
-import com.jiayuan.jr.connectmodule.Component.DaggerUserComponent
+import com.jiayuan.jr.bottle.mvp.model.Component.DaggerUserComponent
 import com.jiayuan.jr.connectmodule.Contract.UserContract
 import com.jiayuan.jr.connectmodule.Module.UserModule
 import com.jiayuan.jr.kiteshell.R

@@ -1,4 +1,4 @@
-package com.jiayuan.jr.connectmodule.Component;
+package com.jiayuan.jr.bottle.mvp.model.Component;
 
 
 import android.app.Activity;
