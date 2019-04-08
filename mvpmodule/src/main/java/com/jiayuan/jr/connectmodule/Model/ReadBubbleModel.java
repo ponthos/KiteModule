@@ -7,8 +7,14 @@ import com.jess.arms.di.scope.ActivityScope;
 import com.jess.arms.integration.IRepositoryManager;
 import com.jess.arms.mvp.BaseModel;
 import com.jiayuan.jr.connectmodule.Contract.ReadBubbleContract;
+import com.jiayuan.jr.connectmodule.Service.KiteService;
+import com.jiayuan.jr.modelmodule.ResponseModel.ArticResponse;
+
+import java.util.List;
 
 import javax.inject.Inject;
+
+import io.reactivex.Observable;
 
 /**
  * 通过Template生成对应页面的MVP和Dagger代码,请注意输入框中输入的名字必须相同
@@ -39,4 +45,8 @@ public class ReadBubbleModel extends BaseModel implements ReadBubbleContract.Mod
         this.mApplication = null;
     }
 
+    @Override
+    public Observable<List<ArticResponse>> getArticle(int userid) {
+        return mRepositoryManager.obtainRetrofitService(KiteService.class).getArticle(userid);
+    }
 }

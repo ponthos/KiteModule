@@ -8,6 +8,7 @@ import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.jess.arms.base.BaseActivity
+import com.jess.arms.base.DefaultAdapter
 import com.jess.arms.di.component.AppComponent
 import com.jess.arms.utils.ArmsUtils
 import com.jess.arms.utils.Preconditions.checkNotNull
@@ -31,6 +32,17 @@ import java.io.InputStream
 @Suppress("DEPRECATION")
 @Route(path = "/kite_module/read_bubble_activity")
 class ReadBubbleActivity : BaseActivity<ReadBubblePresenter>(), ReadBubbleContract.View {
+    override fun startLoadMore() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun endLoadMore() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun setAdapter(adapter: DefaultAdapter<*>?) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
 
     override fun setupActivityComponent(appComponent: AppComponent) {

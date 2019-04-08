@@ -49,5 +49,7 @@ public class ReadBubblePresenter extends BasePresenter<ReadBubbleContract.Model,
         this.mImageLoader = null;
         this.mApplication = null;
     }
-
+    public void getArticle(int userid){
+//        mModel.getArticle(userid).
+    }
 }
