@@ -1,8 +1,9 @@
-package com.jiayuan.jr.bottle.mvp.model;
+package com.jiayuan.jr.bottle.mvp.model.Component;
+
+import android.app.Activity;
 
 import com.jess.arms.di.component.AppComponent;
 import com.jess.arms.di.scope.ActivityScope;
-import com.jiayuan.jr.bottle.app.ui.Activity.ReadBubbleActivity;
 import com.jiayuan.jr.connectmodule.Module.ReadBubbleModule;
 
 import dagger.Component;
@@ -20,5 +21,5 @@ import dagger.Component;
 @ActivityScope
 @Component(modules = ReadBubbleModule.class, dependencies = AppComponent.class)
 public interface ReadBubbleComponent {
-    void inject(ReadBubbleActivity activity);
+    void inject(Activity activity);
 }

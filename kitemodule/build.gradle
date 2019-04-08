@@ -67,7 +67,6 @@ dependencies {
     annotationProcessor "com.jakewharton:butterknife-compiler:10.0.0"
     //Butterknife 插件, 很多人因为没加这个而报错, 切记!!!
     annotationProcessor rootProject.ext.dependencies["dagger2-compiler"]
-    api 'me.jessyan:arms:2.5.0'
     //依赖插件
     api project(':modelmodule')
     api project(':basemodule')

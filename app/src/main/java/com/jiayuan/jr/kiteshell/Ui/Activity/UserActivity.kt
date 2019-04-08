@@ -53,6 +53,7 @@ class UserActivity : BaseActivity<BasePresenter<*, *>>(), UserContract.View {
         return R.layout.activity_main
     }
 
+    @Throws(NullPointerException::class)
     override fun initData(savedInstanceState: Bundle?) {
 //        mine=findViewById(R.id.mine);
         homeFragment = HomeFragment()
@@ -60,7 +61,8 @@ class UserActivity : BaseActivity<BasePresenter<*, *>>(), UserContract.View {
         mineFragment = MineFragment()
         fragment = arrayOf(homeFragment, otherFragment, mineFragment)
         selectTab(0)
-        mine!!.setOnClickListener {
+        var mine = mine
+        (if (mine != null) mine else throw KotlinNullPointerException()).setOnClickListener {
             // 1. 应用内简单的跳转(通过URL跳转在'进阶用法'中)
             //                    ARouter.getInstance().build("/test/activity").navigation();
             ARouter.getInstance().build("/kite_module/bessel_activity").navigation()
@@ -71,10 +73,10 @@ class UserActivity : BaseActivity<BasePresenter<*, *>>(), UserContract.View {
             //                            .withObject("key4", new Test("Jack", "Rose"))
             //                            .navigation();
         }
-        home!!.setOnClickListener { selectTab(0) }
-        other!!.setOnClickListener { ARouter.getInstance().build("/kite_module/bubble_activity").navigation() }
-        //        banner=findViewById(R.id.banner);
-
+        (if (home != null) home else throw NullPointerException("Expression 'home' must not be null")).setOnClickListener { selectTab(0) }
+        var other = other
+        (if (other != null) other else throw KotlinNullPointerException()).setOnClickListener { ARouter.getInstance().build("/kite_module/read_bubble_activity").navigation() }
+//        other!!.setOnClickListener { ARouter.getInstance().build("/kite_module/bubble_activity").navigation() }
     }
 
     private fun selectTab(i: Int) {
