@@ -14,7 +14,7 @@
 
         <com.jiayuan.jr.basemodule.HearView
         android:layout_width="match_parent"
-        android:id="@+id/high"
+        android:id="@+id/read_bubble_view"
         android:layout_height="match_parent">
 
         </com.jiayuan.jr.basemodule.HearView>

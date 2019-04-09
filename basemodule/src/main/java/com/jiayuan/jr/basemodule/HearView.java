@@ -23,6 +23,9 @@ import android.view.animation.AccelerateInterpolator;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.jiayuan.jr.modelmodule.ResponseModel.ArticResponse;
+
+import java.util.List;
 import java.util.Random;
 
 public class HearView extends RelativeLayout {
@@ -34,7 +37,28 @@ public class HearView extends RelativeLayout {
     protected Bitmap bitmap;
 
     private int[]colors ={Color.WHITE,Color.CYAN,Color.YELLOW,Color.BLACK ,Color.LTGRAY,Color.GREEN,Color.RED};
+    List<ArticResponse> strings;
+    public void getArticles(List<ArticResponse> strings){
+        this.strings=strings;
+        pointFStart = new PointF();
+        pointFFirst = new PointF();
+        pointFSecond = new PointF();
+        pointFEnd = new PointF();
 
+        pointFStart.x = getMeasuredWidth() / 2 - bitmap.getWidth() / 2;
+        pointFStart.y = getMeasuredHeight() - bitmap.getHeight();
+
+        pointFEnd.y = 0;
+        pointFEnd.x = random.nextFloat() * getMeasuredWidth();
+
+        pointFFirst.x = random.nextFloat() * getMeasuredWidth();
+        pointFSecond.x = getMeasuredWidth() - pointFFirst.x;
+        pointFSecond.y = random.nextFloat() * getMeasuredHeight() / 2 + getMeasuredHeight() / 2;
+        pointFFirst.y = random.nextFloat() * getMeasuredHeight() / 2;
+        Log.i("TAG", "出发了");
+
+        addHeart(strings);
+    }
     public HearView(Context context) {
         super(context);
         initView();
@@ -49,9 +73,9 @@ public class HearView extends RelativeLayout {
         super(context, attrs, defStyleAttr);
         initView();
     }
-
+    int touch;
     private void initView() {
-
+        touch=0;
 
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
@@ -71,23 +95,24 @@ public class HearView extends RelativeLayout {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        pointFStart = new PointF();
-        pointFFirst = new PointF();
-        pointFSecond = new PointF();
-        pointFEnd = new PointF();
-
-        pointFStart.x = getMeasuredWidth() / 2 - bitmap.getWidth() / 2;
-        pointFStart.y = getMeasuredHeight() - bitmap.getHeight();
-
-        pointFEnd.y = 0;
-        pointFEnd.x = random.nextFloat() * getMeasuredWidth();
-
-        pointFFirst.x = random.nextFloat() * getMeasuredWidth();
-        pointFSecond.x = getMeasuredWidth() - pointFFirst.x;
-        pointFSecond.y = random.nextFloat() * getMeasuredHeight() / 2 + getMeasuredHeight() / 2;
-        pointFFirst.y = random.nextFloat() * getMeasuredHeight() / 2;
-        Log.i("TAG", "出发了");
-        addHeart();
+//        pointFStart = new PointF();
+//        pointFFirst = new PointF();
+//        pointFSecond = new PointF();
+//        pointFEnd = new PointF();
+//
+//        pointFStart.x = getMeasuredWidth() / 2 - bitmap.getWidth() / 2;
+//        pointFStart.y = getMeasuredHeight() - bitmap.getHeight();
+//
+//        pointFEnd.y = 0;
+//        pointFEnd.x = random.nextFloat() * getMeasuredWidth();
+//
+//        pointFFirst.x = random.nextFloat() * getMeasuredWidth();
+//        pointFSecond.x = getMeasuredWidth() - pointFFirst.x;
+//        pointFSecond.y = random.nextFloat() * getMeasuredHeight() / 2 + getMeasuredHeight() / 2;
+//        pointFFirst.y = random.nextFloat() * getMeasuredHeight() / 2;
+//        Log.i("TAG", "出发了");
+//
+//        addHeart(strings);
         return true;
     }
     @Override
@@ -124,13 +149,17 @@ public class HearView extends RelativeLayout {
 //        addView(button);
     }
 
-    public void addHeart() {
+    public void addHeart(List<ArticResponse> stringList) {
         TextView imageView = new TextView(getContext());
         LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.addRule(CENTER_HORIZONTAL);
         params.addRule(ALIGN_PARENT_BOTTOM);
         imageView.setBackground(getResources().getDrawable(R.drawable.pop));
-        imageView.setText("我是文字");
+        if(touch<stringList.size()){
+            imageView.setText(stringList.get(touch).getArticle());}
+        else {
+            touch=0;
+            imageView.setText(stringList.get(touch).getArticle()); }
         imageView.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_VERTICAL);
         addView(imageView, params);
         moveHeart(imageView);

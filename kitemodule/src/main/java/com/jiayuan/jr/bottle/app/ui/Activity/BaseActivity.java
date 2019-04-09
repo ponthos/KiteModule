@@ -17,10 +17,12 @@ import com.trello.rxlifecycle2.android.ActivityEvent;
 
 import javax.inject.Inject;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.annotations.Nullable;
 import io.reactivex.subjects.BehaviorSubject;
 import io.reactivex.subjects.Subject;
 
@@ -29,7 +31,7 @@ import static com.jess.arms.utils.ThirdViewUtil.convertAutoView;
 /**
  * ================================================
  * 因为 Java 只能单继承, 所以如果要用到需要继承特定 {@link Activity} 的三方库, 那你就需要自己自定义 {@link Activity}
- * 继承于这个特定的 {@link Activity}, 然后再按照 {@link com.jess.arms.base.BaseActivity} 的格式, 将代码复制过去, 记住一定要实现{@link IActivity}
+ * 继承于这个特定的 {@link Activity}, 然后再按照 {@link BaseActivity} 的格式, 将代码复制过去, 记住一定要实现{@link IActivity}
  *
  * @see <a href="https://github.com/JessYanCoding/MVPArms/wiki">请配合官方 Wiki 文档学习本框架</a>
  * @see <a href="https://github.com/JessYanCoding/MVPArms/wiki/UpdateLog">更新日志, 升级必看!</a>
@@ -47,7 +49,7 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
     private Unbinder mUnbinder;
     @Inject
     @Nullable
-    protected P mPresenter;//如果当前页面逻辑简单, Presenter 可以为 null
+    public P mPresenter;//如果当前页面逻辑简单, Presenter 可以为 null
 
     @NonNull
     @Override
@@ -78,8 +80,8 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
             //如果initView返回0,框架则不会调用setContentView(),当然也不会 Bind ButterKnife
             if (layoutResID != 0) {
                 setContentView(layoutResID);
-//                //绑定到butterknife
-//                mUnbinder = ButterKnife.bind(this);
+                //绑定到butterknife
+                mUnbinder = ButterKnife.bind(this);
             }
         } catch (Exception e) {
             if (e instanceof InflateException) throw e;
@@ -114,6 +116,7 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
     }
 
     /**
+     * 这个Activity是否会使用Fragment,框架会根据这个属性判断是否注册{@link FragmentManager.FragmentLifecycleCallbacks}
      * 如果返回false,那意味着这个Activity不需要绑定Fragment,那你再在这个Activity中绑定继承于 {@link com.jess.arms.base.BaseFragment} 的Fragment将不起任何作用
      *
      * @return
@@ -123,4 +126,3 @@ public abstract class BaseActivity<P extends IPresenter> extends AppCompatActivi
         return true;
     }
 }
-

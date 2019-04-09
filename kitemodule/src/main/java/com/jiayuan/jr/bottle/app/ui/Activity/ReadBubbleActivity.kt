@@ -7,17 +7,18 @@ import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.jess.arms.base.BaseActivity
 import com.jess.arms.base.DefaultAdapter
 import com.jess.arms.di.component.AppComponent
 import com.jess.arms.utils.ArmsUtils
 import com.jess.arms.utils.Preconditions.checkNotNull
-import com.jiayuan.jr.basemodule.HearView
 import com.jiayuan.jr.bottle.mvp.model.Component.DaggerReadBubbleComponent
 import com.jiayuan.jr.connectmodule.Contract.ReadBubbleContract
 import com.jiayuan.jr.connectmodule.Module.ReadBubbleModule
 import com.jiayuan.jr.connectmodule.Presenter.ReadBubblePresenter
 import com.jiayuan.jr.kitemodule.R
+import com.jiayuan.jr.kitemodule.R.drawable.bg_pop
+import com.jiayuan.jr.modelmodule.ResponseModel.ArticResponse
+import kotlinx.android.synthetic.main.kitemodulemodule_activity_bubble.*
 import java.io.InputStream
 
 /**
@@ -32,6 +33,11 @@ import java.io.InputStream
 @Suppress("DEPRECATION")
 @Route(path = "/kite_module/read_bubble_activity")
 class ReadBubbleActivity : BaseActivity<ReadBubblePresenter>(), ReadBubbleContract.View {
+    override fun setArticles(articleResponses: MutableList<ArticResponse>?) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        this.read_bubble_view.getArticles(articleResponses);
+    }
+
     override fun startLoadMore() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
@@ -53,13 +59,13 @@ class ReadBubbleActivity : BaseActivity<ReadBubblePresenter>(), ReadBubbleContra
                 .build()
                 .inject(this)
     }
-
     override fun initView(savedInstanceState: Bundle?): Int {
         return R.layout.kitemodulemodule_activity_bubble
     }
 
     override fun initData(savedInstanceState: Bundle?) {
-
+        var mPresenter = mPresenter
+        (if (mPresenter != null) mPresenter else throw KotlinNullPointerException()).getArticle(1);
     }
 
 
@@ -87,8 +93,7 @@ class ReadBubbleActivity : BaseActivity<ReadBubblePresenter>(), ReadBubbleContra
     @SuppressLint("ResourceType")
     override fun onResume() {
         super.onResume()
-        val layout = findViewById<HearView>(R.id.high)
-        val `is`: InputStream = resources.openRawResource(R.drawable.bg_pop)
+        val `is`: InputStream = resources.openRawResource(bg_pop)
         val opt = BitmapFactory.Options()
         opt.inPreferredConfig = Bitmap.Config.ARGB_8888
         opt.inPurgeable = true
@@ -96,7 +101,7 @@ class ReadBubbleActivity : BaseActivity<ReadBubblePresenter>(), ReadBubbleContra
         opt.inSampleSize = 2
         val bm = BitmapFactory.decodeStream(`is`, null, opt)
         val bd = BitmapDrawable(resources, bm)
-        layout.setBackgroundDrawable(bd)
+        read_bubble_view.setBackgroundDrawable(bd)
     }
 
 }

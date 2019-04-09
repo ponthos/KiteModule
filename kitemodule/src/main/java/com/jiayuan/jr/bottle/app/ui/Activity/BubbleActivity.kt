@@ -32,7 +32,7 @@ class BubbleActivity() : BaseActivity<IPresenter>() {
     @SuppressLint("ResourceType")
     override fun onResume() {
         super.onResume()
-        val layout = findViewById<HearView>(R.id.high)
+        val layout = findViewById<HearView>(R.id.read_bubble_view)
         val `is`: InputStream = resources.openRawResource(R.drawable.bg_pop)
         val opt = BitmapFactory.Options()
         opt.inPreferredConfig = Bitmap.Config.ARGB_8888

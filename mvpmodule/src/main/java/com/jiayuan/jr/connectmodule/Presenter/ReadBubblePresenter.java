@@ -7,10 +7,17 @@ import com.jess.arms.http.imageloader.ImageLoader;
 import com.jess.arms.integration.AppManager;
 import com.jess.arms.mvp.BasePresenter;
 import com.jiayuan.jr.connectmodule.Contract.ReadBubbleContract;
+import com.jiayuan.jr.modelmodule.ResponseModel.ArticResponse;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
+import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
+import me.jessyan.rxerrorhandler.handler.RetryWithDelay;
 
 
 /**
@@ -49,7 +56,21 @@ public class ReadBubblePresenter extends BasePresenter<ReadBubbleContract.Model,
         this.mImageLoader = null;
         this.mApplication = null;
     }
-    public void getArticle(int userid){
-//        mModel.getArticle(userid).
+    public void getArticle(int userId){
+        mModel.getArticle(userId).subscribeOn(Schedulers.io())
+                .retryWhen(new RetryWithDelay(3, 2))
+                .doOnSubscribe(disposable -> {
+                }).subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+//                .doAfterTerminate(() -> {})
+//                .compose(RxUtils.bindToLifecycle(mRootView))
+                .subscribe(
+                        new ErrorHandleSubscriber<List<ArticResponse>>(mErrorHandler) {
+                            @Override
+                            public void onNext(List<ArticResponse> articleResponses) {
+                                mRootView.setArticles(articleResponses);
+                            }
+                        }
+                );
     }
 }
