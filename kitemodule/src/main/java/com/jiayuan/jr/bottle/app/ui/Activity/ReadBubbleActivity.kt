@@ -64,8 +64,7 @@ class ReadBubbleActivity : BaseActivity<ReadBubblePresenter>(), ReadBubbleContra
     }
 
     override fun initData(savedInstanceState: Bundle?) {
-        var mPresenter = mPresenter
-        (if (mPresenter != null) mPresenter else throw KotlinNullPointerException()).getArticle(1);
+        mPresenter?.getArticle(1);
     }
 
 

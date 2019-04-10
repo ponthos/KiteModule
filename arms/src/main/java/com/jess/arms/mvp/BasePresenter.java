@@ -113,7 +113,7 @@ public class BasePresenter<M extends IModel, V extends IView> implements IPresen
      * @param owner and {@link Fragment}
      */
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-    void onDestroy(LifecycleOwner owner) {
+    public void onDestroy(LifecycleOwner owner) {
         /**
          * 注意, 如果在这里调用了 {@link #onDestroy()} 方法, 会出现某些地方引用 {@code mModel} 或 {@code mRootView} 为 null 的情况
          * 比如在 {@link RxLifecycle} 终止 {@link Observable} 时, 在 {@link io.reactivex.Observable#doFinally(Action)} 中却引用了 {@code mRootView} 做一些释放资源的操作, 此时会空指针

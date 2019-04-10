@@ -79,7 +79,7 @@ dependencies {
     }
     api project(":modelmodule")
     api project(":arms")
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 }
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'

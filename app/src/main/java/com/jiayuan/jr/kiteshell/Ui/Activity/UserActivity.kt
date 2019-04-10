@@ -50,11 +50,13 @@ class UserActivity : BaseActivity<BasePresenter<*, *>>(), UserContract.View {
     }
 
     override fun initView(savedInstanceState: Bundle?): Int {
+
         return R.layout.activity_main
     }
 
     @Throws(NullPointerException::class)
     override fun initData(savedInstanceState: Bundle?) {
+        mPresenter.toString();
 //        mine=findViewById(R.id.mine);
         homeFragment = HomeFragment()
         otherFragment = OtherFragment()

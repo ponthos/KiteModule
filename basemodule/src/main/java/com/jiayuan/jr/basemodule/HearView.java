@@ -17,7 +17,6 @@ import android.graphics.PointF;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.MotionEvent;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.widget.RelativeLayout;
@@ -93,8 +92,8 @@ public class HearView extends RelativeLayout {
     }
 
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
+//    @Override
+//    public boolean onTouchEvent(MotionEvent event) {
 //        pointFStart = new PointF();
 //        pointFFirst = new PointF();
 //        pointFSecond = new PointF();
@@ -113,8 +112,8 @@ public class HearView extends RelativeLayout {
 //        Log.i("TAG", "出发了");
 //
 //        addHeart(strings);
-        return true;
-    }
+//        return true;
+//    }
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);

@@ -105,7 +105,12 @@ dependencies {
     compileOnly rootProject.ext.dependencies["androideventbus"]
     compileOnly rootProject.ext.dependencies["eventbus"]
     api rootProject.ext.dependencies["gson"]
-
+//    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8-jdk8:$kotlin_version"
+//
+//    kapt 'com.google.dagger:dagger-compiler:2.19'
+//    implementation 'com.google.dagger:dagger:2.19'
+    //解决Glide找不到Android声明库问题
+    annotationProcessor 'androidx.annotation:annotation:1.0.0'
     //test
     api rootProject.ext.dependencies["timber"]
 }
